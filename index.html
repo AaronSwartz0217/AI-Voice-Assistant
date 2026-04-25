@@ -1,0 +1,319 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>大创项目 - 主页</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #a0c4ff;
+        }
+        
+        .hero {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 100px 0;
+            text-align: center;
+        }
+        
+        .hero h1 {
+            font-size: 48px;
+            margin-bottom: 20px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .hero p {
+            font-size: 18px;
+            margin-bottom: 40px;
+            opacity: 0.9;
+        }
+        
+        .btn {
+            display: inline-block;
+            background-color: #3a7ca5;
+            color: white;
+            padding: 16px 40px;
+            border-radius: 50px;
+            text-decoration: none;
+            font-size: 18px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            box-shadow: 0 6px 20px rgba(58, 124, 165, 0.4);
+            border: none;
+            cursor: pointer;
+        }
+        
+        .btn:hover {
+            background-color: #2c5364;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(58, 124, 165, 0.6);
+        }
+        
+        .btn:active {
+            transform: translateY(-1px);
+            box-shadow: 0 4px 15px rgba(58, 124, 165, 0.4);
+        }
+        
+        .about {
+            padding: 80px 0;
+            background-color: #f0f4f8;
+        }
+        
+        .about h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #1a365d;
+        }
+        
+        .features {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .features h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 60px;
+            color: #1a365d;
+        }
+        
+        .feature-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 40px;
+        }
+        
+        .feature-item {
+            background-color: #f8fafc;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+        }
+        
+        .feature-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 10px 25px rgba(0,0,0,0.1);
+        }
+        
+        .feature-item h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #2c5282;
+        }
+        
+        .feature-item p {
+            color: #64748b;
+            line-height: 1.6;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+        
+        .team {
+            padding: 80px 0;
+            background-color: #f8fafc;
+        }
+        
+        .team h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 60px;
+            color: #1a365d;
+        }
+        
+        .team-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
+            gap: 30px;
+        }
+        
+        .team-member {
+            text-align: center;
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+        
+        .team-member h3 {
+            margin-top: 15px;
+            color: #2c5282;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">人工智能语音小助手</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">主页</a></li>
+                    <li><a href="show.html">项目展示</a></li>
+                    <li><a href="tell.html">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="hero">
+        <div class="container">
+            <h1>人工智能语音小助手</h1>
+            <p>从智能语音助手的技术支持、应用场景、设计模块来入手，构建语音交互界面研究框架，并分析语音交互界面的组成部分与其对应的特点。</p>
+            <a href="show.html" class="btn">了解更多</a>
+        </div>
+    </section>
+    
+    <section class="about">
+        <div class="container">
+            <h2>项目介绍</h2>
+            <div style="max-width: 800px; margin: 0 auto; text-align: center;">
+                <p style="font-size: 18px; line-height: 1.8; color: #4a5568; margin-bottom: 30px;">
+                    本项目基于STM32单片机核心系统电路设计，实现智能语音检测与识别功能，具备按键手动功能切换、TFT高清液晶信息显示、LED电源状态指示等功能。
+                </p>
+                <p style="font-size: 18px; line-height: 1.8; color: #4a5568; margin-bottom: 30px;">
+                    我们通过用户满意度问卷调研、用户深度访谈、用户行为观察来获取用户需求，并且进行需求验证与重要程度分析，最终整合语音交互界面与目标用户的研究内容，提出设计策略。
+                </p>
+                <p style="font-size: 18px; line-height: 1.8; color: #4a5568;">
+                    项目旨在提高语音交互界面的可用性与语音交互过程的趣味性，为智能家居、教育培训、物联网演示等场景提供智能语音解决方案。
+                </p>
+            </div>
+        </div>
+    </section>
+    
+    <section class="features">
+        <div class="container">
+            <h2>项目特色</h2>
+            <div class="feature-grid">
+                <div class="feature-item">
+                    <h3>语音检测与识别</h3>
+                    <p>实现智能语音检测与识别功能，支持语音指令控制。</p>
+                </div>
+                <div class="feature-item">
+                    <h3>多功能交互</h3>
+                    <p>具备按键手动功能切换、TFT高清液晶信息显示、LED电源状态指示等功能。</p>
+                </div>
+                <div class="feature-item">
+                    <h3>环境监测</h3>
+                    <p>能测量室内温湿度，实现唤醒彩灯效果，提供舒适的交互体验。</p>
+                </div>
+                <div class="feature-item">
+                    <h3>数据通信</h3>
+                    <p>支持一路串行通信数据交互，实现与其他设备的信息交换。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="team">
+        <div class="container">
+            <h2>团队成员</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <h3>俞诚</h3>
+                    <p>信息学部，23级计科</p>
+                </div>
+                <div class="team-member">
+                    <h3>季文轩</h3>
+                    <p>信息学部，23级计科</p>
+                </div>
+                <div class="team-member">
+                    <h3>李东盛</h3>
+                    <p>信息学部，23级计科</p>
+                </div>
+                <div class="team-member">
+                    <h3>李世星</h3>
+                    <p>信息学部，23级物联网</p>
+                </div>
+                <div class="team-member">
+                    <h3>刘思棋</h3>
+                    <p>信息学部，23级计科</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <section class="team">
+        <div class="container">
+            <h2>指导导师</h2>
+            <div class="team-grid">
+                <div class="team-member">
+                    <h3>华进</h3>
+                    <p>副教授</p>
+                </div>
+                <div class="team-member">
+                    <h3>徐剑</h3>
+                    <p>讲师</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025-2027 南通大学杏林学院 人工智能语音小助手项目组</p>
+        </div>
+    </footer>
+</body>
+</html>

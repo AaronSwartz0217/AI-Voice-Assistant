@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>联系我们 - 大创项目</title>
+    <title>联系我们 - 人工智能语音小助手</title>
     <style>
         * {
             margin: 0;
@@ -74,136 +74,91 @@
         }
         
         .contact-container {
-            display: grid;
-            grid-template-columns: 1fr 1fr;
-            gap: 60px;
+            max-width: 1000px;
+            margin: 0 auto;
         }
         
-        .contact-info {
-            background-color: #f8fafc;
-            padding: 40px;
-            border-radius: 10px;
+        .contact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
-        }
-        
-        .contact-info h2 {
-            color: #2c5282;
-            margin-bottom: 30px;
-        }
-        
-        .info-item {
-            display: flex;
-            align-items: flex-start;
-            margin-bottom: 20px;
-        }
-        
-        .info-item i {
-            color: #3182ce;
-            font-size: 20px;
-            margin-right: 15px;
-            margin-top: 2px;
-        }
-        
-        .info-item p {
-            color: #64748b;
-            line-height: 1.6;
-        }
-        
-        .contact-form {
-            background-color: #f8fafc;
-            padding: 40px;
             border-radius: 10px;
-            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            overflow: hidden;
         }
         
-        .contact-form h2 {
-            color: #2c5282;
-            margin-bottom: 30px;
-        }
-        
-        .form-group {
-            margin-bottom: 20px;
-        }
-        
-        .form-group label {
-            display: block;
-            margin-bottom: 5px;
-            color: #4a5568;
+        .contact-table th {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 15px;
+            text-align: left;
             font-weight: bold;
         }
         
-        .form-group input,
-        .form-group textarea {
-            width: 100%;
-            padding: 12px;
-            border: 1px solid #e2e8f0;
-            border-radius: 5px;
-            font-size: 16px;
-            transition: border-color 0.3s ease;
+        .contact-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
         }
         
-        .form-group input:focus,
-        .form-group textarea:focus {
-            outline: none;
-            border-color: #3182ce;
-            box-shadow: 0 0 0 3px rgba(49, 130, 206, 0.1);
+        .contact-table tr:nth-child(even) {
+            background-color: #f8fafc;
         }
         
-        .form-group textarea {
-            resize: vertical;
-            min-height: 150px;
+        .contact-table tr:hover {
+            background-color: #edf2f7;
         }
         
-        .btn {
-            display: inline-block;
+        .copy-btn {
             background-color: #3182ce;
             color: white;
-            padding: 12px 30px;
-            border-radius: 50px;
-            text-decoration: none;
-            font-size: 16px;
-            font-weight: bold;
-            transition: all 0.3s ease;
-            box-shadow: 0 4px 15px rgba(49, 130, 206, 0.4);
             border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
             cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
         }
         
-        .btn:hover {
+        .copy-btn:hover {
             background-color: #2b6cb0;
-            transform: translateY(-2px);
-            box-shadow: 0 6px 20px rgba(49, 130, 206, 0.6);
+            transform: translateY(-1px);
         }
         
-        .team-section {
-            padding: 80px 0;
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        
+        .instructor-section {
+            margin-top: 60px;
+        }
+        
+        .instructor-card {
             background-color: #f8fafc;
-        }
-        
-        .team-section h2 {
-            text-align: center;
-            font-size: 36px;
-            margin-bottom: 60px;
-            color: #1a365d;
-        }
-        
-        .team-grid {
-            display: grid;
-            grid-template-columns: repeat(auto-fit, minmax(200px, 1fr));
-            gap: 30px;
-        }
-        
-        .team-member {
-            text-align: center;
-            background-color: white;
-            padding: 20px;
+            padding: 30px;
             border-radius: 10px;
             box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
         }
         
-        .team-member h3 {
-            margin-top: 15px;
+        .instructor-card h3 {
             color: #2c5282;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .instructor-info {
+            margin-bottom: 15px;
+        }
+        
+        .instructor-info strong {
+            color: #2d3748;
+            margin-right: 10px;
+        }
+        
+        .instructor-achievements {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
         }
         
         .footer {
@@ -211,10 +166,31 @@
             color: white;
             padding: 40px 0;
             text-align: center;
+            margin-top: 60px;
         }
         
         .footer p {
             margin-bottom: 10px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #48bb78;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
         }
     </style>
 </head>
@@ -222,7 +198,10 @@
     <header class="header">
         <div class="container">
             <nav class="nav">
-                <div class="logo">人工智能语音小助手</div>
+                <div class="logo">
+                    <img src="nantong-university-logo-1024px.png" alt="南通大学" style="height: 40px; vertical-align: middle; margin-right: 10px;">
+                    人工智能语音小助手
+                </div>
                 <ul class="nav-links">
                     <li><a href="index.html">主页</a></li>
                     <li><a href="show.html">项目展示</a></li>
@@ -235,11 +214,127 @@
     <section class="contact-section">
         <div class="container">
             <h1>联系我们</h1>
-            <div style="text-align: center; padding: 100px 0;">
-                <p>页面正在建设中...</p>
+            <div class="contact-container">
+                <h2 style="color: #2c5282; margin-bottom: 30px;">团队成员联系方式</h2>
+                <table class="contact-table">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>学部</th>
+                            <th>年级、专业</th>
+                            <th>联系电话</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>俞诚</td>
+                            <td>信息学部</td>
+                            <td>23级计科</td>
+                            <td>15722968652</td>
+                            <td><button class="copy-btn" onclick="copyToClipboard('15722968652')">复制</button></td>
+                        </tr>
+                        <tr>
+                            <td>李东盛</td>
+                            <td>信息学部</td>
+                            <td>23级计科</td>
+                            <td>18098302488</td>
+                            <td><button class="copy-btn" onclick="copyToClipboard('18098302488')">复制</button></td>
+                        </tr>
+                        <tr>
+                            <td>刘思棋</td>
+                            <td>信息学部</td>
+                            <td>23级计科</td>
+                            <td>15240234926</td>
+                            <td><button class="copy-btn" onclick="copyToClipboard('15240234926')">复制</button></td>
+                        </tr>
+                        <tr>
+                            <td>季文轩</td>
+                            <td>信息学部</td>
+                            <td>23级计科</td>
+                            <td>13186565887</td>
+                            <td><button class="copy-btn" onclick="copyToClipboard('13186565887')">复制</button></td>
+                        </tr>
+                        <tr>
+                            <td>李世星</td>
+                            <td>信息学部</td>
+                            <td>23级物联网</td>
+                            <td>18013420316</td>
+                            <td><button class="copy-btn" onclick="copyToClipboard('18013420316')">复制</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="instructor-section">
+                    <h2 style="color: #2c5282; margin-bottom: 30px;">指导教师</h2>
+                    
+                    <div class="instructor-card">
+                        <h3>第一指导教师</h3>
+                        <div class="instructor-info">
+                            <strong>姓名：</strong>华进
+                        </div>
+                        <div class="instructor-info">
+                            <strong>联系电话：</strong>13921615700
+                            <button class="copy-btn" style="margin-left: 10px;" onclick="copyToClipboard('13921615700')">复制</button>
+                        </div>
+                        <div class="instructor-info">
+                            <strong>E-mail：</strong>huajin@ntu.edu.cn
+                            <button class="copy-btn" style="margin-left: 10px;" onclick="copyToClipboard('huajin@ntu.edu.cn')">复制</button>
+                        </div>
+                        <div class="instructor-info">
+                            <strong>专业技术职务：</strong>副教授
+                        </div>
+                        <div class="instructor-achievements">
+                            <strong>主要成果：</strong>长期从事计算机专业基础课程的教学、教研和科研工作，以主编、副主编身份参编教材3部，主持、参加多项横向课题、校级教改项目以及南通市应用研究项目，发表论文多篇。
+                        </div>
+                    </div>
+                    
+                    <div class="instructor-card">
+                        <h3>第二指导教师</h3>
+                        <div class="instructor-info">
+                            <strong>姓名：</strong>徐剑
+                        </div>
+                        <div class="instructor-info">
+                            <strong>联系电话：</strong>18912251343
+                            <button class="copy-btn" style="margin-left: 10px;" onclick="copyToClipboard('18912251343')">复制</button>
+                        </div>
+                        <div class="instructor-info">
+                            <strong>E-mail：</strong>xj1977@ntu.edu.cn
+                            <button class="copy-btn" style="margin-left: 10px;" onclick="copyToClipboard('xj1977@ntu.edu.cn')">复制</button>
+                        </div>
+                        <div class="instructor-info">
+                            <strong>专业技术职务：</strong>讲师
+                        </div>
+                        <div class="instructor-achievements">
+                            <strong>主要成果：</strong>长期从事计算机专业课，公共课的教学，参与编写教材2部，主持参与校级、院级教改项目，主持公共课考试系统的开发与维护。
+                        </div>
+                    </div>
+                </div>
             </div>
         </div>
     </section>
+    
+    <div class="notification" id="notification">
+        已复制到剪贴板！
+    </div>
+    
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                showNotification();
+            }).catch(function(err) {
+                console.error('复制失败:', err);
+            });
+        }
+        
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+            setTimeout(function() {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+    </script>
     
     <footer class="footer">
         <div class="container">

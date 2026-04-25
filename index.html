@@ -3,7 +3,7 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>大创项目 - 主页</title>
+    <title>人工智能语音小助手 - 主页</title>
     <style>
         * {
             margin: 0;
@@ -201,13 +201,263 @@
             margin-top: 15px;
             color: #2c5282;
         }
+
+        .awards {
+            padding: 80px 0;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+        }
+
+        .awards h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 60px;
+            color: white;
+        }
+
+        .award-grid {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .award-item {
+            background-color: rgba(255, 255, 255, 0.1);
+            backdrop-filter: blur(10px);
+            padding: 30px;
+            border-radius: 10px;
+            border: 1px solid rgba(255, 255, 255, 0.2);
+            transition: transform 0.3s ease, background-color 0.3s ease;
+        }
+
+        .award-item:hover {
+            transform: translateY(-5px);
+            background-color: rgba(255, 255, 255, 0.15);
+        }
+
+        .award-item h3 {
+            font-size: 20px;
+            margin-bottom: 15px;
+            color: #a0c4ff;
+        }
+
+        .award-item p {
+            color: rgba(255, 255, 255, 0.9);
+            line-height: 1.6;
+        }
+
+        .icon {
+            width: 60px;
+            height: 60px;
+            margin-bottom: 20px;
+        }
+
+        .icon-small {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+        }
+
+        .icon-feature {
+            width: 50px;
+            height: 50px;
+            margin-bottom: 15px;
+            fill: #3a7ca5;
+        }
+
+        .icon-timeline {
+            width: 24px;
+            height: 24px;
+            margin-right: 15px;
+            fill: #3a7ca5;
+            flex-shrink: 0;
+        }
+
+        .team-icon {
+            width: 60px;
+            height: 60px;
+            margin: 0 auto 15px;
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .team-icon svg {
+            width: 30px;
+            height: 30px;
+            stroke: white;
+            fill: none;
+        }
+
+        .team-role {
+            color: #64748b;
+            font-size: 14px;
+            font-weight: 500;
+            margin-top: 5px;
+        }
+
+        .feature-icon-wrapper {
+            display: flex;
+            align-items: center;
+            margin-bottom: 10px;
+        }
+
+        .innovation {
+            padding: 80px 0;
+            background-color: #f0f4f8;
+        }
+
+        .innovation h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 40px;
+            color: #1a365d;
+        }
+
+        .innovation-content {
+            max-width: 900px;
+            margin: 0 auto;
+        }
+
+        .innovation-item {
+            background-color: white;
+            padding: 25px 30px;
+            border-radius: 10px;
+            margin-bottom: 20px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-left: 4px solid #3a7ca5;
+        }
+
+        .innovation-item h3 {
+            font-size: 20px;
+            margin-bottom: 12px;
+            color: #2c5282;
+        }
+
+        .innovation-item p {
+            color: #64748b;
+            line-height: 1.7;
+        }
+
+        .timeline {
+            padding: 80px 0;
+            background-color: #f8fafc;
+        }
+
+        .timeline h2 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 60px;
+            color: #1a365d;
+        }
+
+        .timeline-items {
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .timeline-item {
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            transition: transform 0.3s ease, box-shadow 0.3s ease;
+            position: relative;
+            overflow: hidden;
+            border-top: 4px solid #3a7ca5;
+            display: flex;
+            flex-direction: column;
+        }
+
+        .timeline-item:hover {
+            transform: translateY(-5px);
+            box-shadow: 0 8px 25px rgba(0,0,0,0.1);
+        }
+
+        .timeline-item svg {
+            width: 50px;
+            height: 50px;
+            margin: 15px 0;
+            fill: none;
+            stroke: #3a7ca5;
+        }
+
+        .timeline-item h3 {
+            color: #2c5282;
+            font-size: 20px;
+            margin: 15px 0 10px;
+        }
+
+        .timeline-item p {
+            color: #64748b;
+            line-height: 1.6;
+            flex: 1;
+        }
+
+        .timeline-date {
+            color: #94a3b8;
+            font-size: 13px;
+            font-weight: 500;
+            margin-top: auto;
+            padding-top: 15px;
+            border-top: 1px solid #e2e8f0;
+        }
+
+        .timeline-content {
+            padding: 0;
+            background-color: transparent;
+            box-shadow: none;
+            display: flex;
+            flex-direction: column;
+            flex: 1;
+        }
+
+        .timeline-content h3 {
+            color: #2c5282;
+            margin-bottom: 15px;
+            font-size: 20px;
+        }
+
+        .timeline-content p {
+            color: #64748b;
+            line-height: 1.6;
+            margin-bottom: 20px;
+        }
+
+        .timeline-btn {
+            display: inline-block;
+            padding: 10px 20px;
+            background: linear-gradient(135deg, #3a7ca5, #2c5364);
+            color: white;
+            text-decoration: none;
+            border-radius: 25px;
+            font-size: 14px;
+            font-weight: 500;
+            transition: all 0.3s ease;
+            border: none;
+            cursor: pointer;
+        }
+
+        .timeline-btn:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(58, 124, 165, 0.3);
+            background: linear-gradient(135deg, #2c5364, #3a7ca5);
+        }
     </style>
 </head>
 <body>
     <header class="header">
         <div class="container">
             <nav class="nav">
-                <div class="logo">人工智能语音小助手</div>
+                <div class="logo">
+                    <img src="nantong-university-logo-1024px.png" alt="南通大学" style="height: 40px; vertical-align: middle; margin-right: 10px;">
+                    人工智能语音小助手
+                </div>
                 <ul class="nav-links">
                     <li><a href="index.html">主页</a></li>
                     <li><a href="show.html">项目展示</a></li>
@@ -219,6 +469,12 @@
     
     <section class="hero">
         <div class="container">
+            <svg style="width: 100px; height: 100px; margin-bottom: 30px;" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5">
+                <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                <line x1="12" y1="19" x2="12" y2="23"></line>
+                <line x1="8" y1="23" x2="16" y2="23"></line>
+            </svg>
             <h1>人工智能语音小助手</h1>
             <p>从智能语音助手的技术支持、应用场景、设计模块来入手，构建语音交互界面研究框架，并分析语音交互界面的组成部分与其对应的特点。</p>
             <a href="show.html" class="btn">了解更多</a>
@@ -247,20 +503,187 @@
             <h2>项目特色</h2>
             <div class="feature-grid">
                 <div class="feature-item">
+                    <svg class="icon-feature" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M12 1a3 3 0 0 0-3 3v8a3 3 0 0 0 6 0V4a3 3 0 0 0-3-3z"></path>
+                        <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+                        <line x1="12" y1="19" x2="12" y2="23"></line>
+                        <line x1="8" y1="23" x2="16" y2="23"></line>
+                    </svg>
                     <h3>语音检测与识别</h3>
                     <p>实现智能语音检测与识别功能，支持语音指令控制。</p>
                 </div>
                 <div class="feature-item">
+                    <svg class="icon-feature" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="2" y="3" width="20" height="14" rx="2" ry="2"></rect>
+                        <line x1="8" y1="21" x2="16" y2="21"></line>
+                        <line x1="12" y1="17" x2="12" y2="21"></line>
+                    </svg>
                     <h3>多功能交互</h3>
                     <p>具备按键手动功能切换、TFT高清液晶信息显示、LED电源状态指示等功能。</p>
                 </div>
                 <div class="feature-item">
+                    <svg class="icon-feature" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 14.76V3.5a2.5 2.5 0 0 0-5 0v11.26a4.5 4.5 0 1 0 5 0z"></path>
+                    </svg>
                     <h3>环境监测</h3>
                     <p>能测量室内温湿度，实现唤醒彩灯效果，提供舒适的交互体验。</p>
                 </div>
                 <div class="feature-item">
+                    <svg class="icon-feature" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <polyline points="22 12 18 12 15 21 9 3 6 12 2 12"></polyline>
+                    </svg>
                     <h3>数据通信</h3>
                     <p>支持一路串行通信数据交互，实现与其他设备的信息交换。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="awards">
+        <div class="container">
+            <h2>团队获奖经历</h2>
+            <div class="award-grid">
+                <div class="award-item">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#a0c4ff" stroke-width="2">
+                        <polygon points="12 2 15.09 8.26 22 9.27 17 14.14 18.18 21.02 12 17.77 5.82 21.02 7 14.14 2 9.27 8.91 8.26 12 2"></polygon>
+                    </svg>
+                    <h3>建模比赛</h3>
+                    <p>团队成员在各类建模大赛中展现出扎实的数学建模能力和创新思维，取得优异成绩。</p>
+                </div>
+                <div class="award-item">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#a0c4ff" stroke-width="2">
+                        <polyline points="16 18 22 12 16 6"></polyline>
+                        <polyline points="8 6 2 12 8 18"></polyline>
+                    </svg>
+                    <h3>蓝桥杯程序设计</h3>
+                    <p>团队成员在蓝桥杯程序设计竞赛中表现突出，展现了较强的算法设计和编程实现能力。</p>
+                </div>
+                <div class="award-item">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#a0c4ff" stroke-width="2">
+                        <rect x="2" y="6" width="20" height="12" rx="2"></rect>
+                        <path d="M6 12h.01M10 12h.01M14 12h.01M18 12h.01"></path>
+                    </svg>
+                    <h3>其他竞赛</h3>
+                    <p>GGJ，CGJ，3C，4C等竞赛</p>
+                </div>
+                <div class="award-item">
+                    <svg class="icon" viewBox="0 0 24 24" fill="none" stroke="#a0c4ff" stroke-width="2">
+                        <path d="M14.5 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V7.5L14.5 2z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <h3>C++/C程序设计</h3>
+                    <p>团队成员均完成基于C++/C的实验设计，具备扎实的编程基础和实践经验。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="innovation">
+        <div class="container">
+            <h2>项目创新与特色</h2>
+            <div class="innovation-content">
+                <div class="innovation-item">
+                    <div class="feature-icon-wrapper">
+                        <svg class="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M2 3h6a4 4 0 0 1 4 4v14a3 3 0 0 0-3-3H2z"></path>
+                            <path d="M22 3h-6a4 4 0 0 0-4 4v14a3 3 0 0 1 3-3h7z"></path>
+                        </svg>
+                        <h3>理论研究框架</h3>
+                    </div>
+                    <p>基于理论研究框架，分析语音交互界面的构成与对应的特点，制作用户调研问卷，了解目标用户的使用情况、使用痛点与期望。</p>
+                </div>
+                <div class="innovation-item">
+                    <div class="feature-icon-wrapper">
+                        <svg class="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M17 21v-2a4 4 0 0 0-4-4H5a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="9" cy="7" r="4"></circle>
+                            <path d="M23 21v-2a4 4 0 0 0-3-3.87"></path>
+                            <path d="M16 3.13a4 4 0 0 1 0 7.75"></path>
+                        </svg>
+                        <h3>用户需求分析</h3>
+                    </div>
+                    <p>确定语音交互过程中的使用指引、智能感营造、交互命令的场景化、合理的错误反馈、不同交互模态的合作、操作方式的趣味性等重要因素。</p>
+                </div>
+                <div class="innovation-item">
+                    <div class="feature-icon-wrapper">
+                        <svg class="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <polygon points="12 2 2 7 12 12 22 7 12 2"></polygon>
+                            <polyline points="2 17 12 22 22 17"></polyline>
+                            <polyline points="2 12 12 17 22 12"></polyline>
+                        </svg>
+                        <h3>设计策略制定</h3>
+                    </div>
+                    <p>以得出的用户需求作为参考依据，与语音交互界面的不同模块进行匹配，从角色、交互模态、交互命令、信息呈现维度来进行设计策略制定。</p>
+                </div>
+                <div class="innovation-item">
+                    <div class="feature-icon-wrapper">
+                        <svg class="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                            <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                            <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                        </svg>
+                        <h3>可用性评估</h3>
+                    </div>
+                    <p>通过原型体验与主观量表打分等方法对语音交互界面进行可用性评估，评估结果显示实践方案可用性良好，证实了设计策略的科学性。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <section class="timeline">
+        <div class="container">
+            <h2>项目实施计划</h2>
+            <div class="timeline-items">
+                <div class="timeline-item">
+                    <svg class="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="10"></circle>
+                        <polyline points="12 6 12 12 16 14"></polyline>
+                    </svg>
+                    <h3>项目启动</h3>
+                    <p>成立项目团队，开展创新实践工作，进行前期技术准备和实验测试。</p>
+                    <div class="timeline-date">2025年5月</div>
+                </div>
+                <div class="timeline-item">
+                    <svg class="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <circle cx="12" cy="12" r="3"></circle>
+                        <path d="M19.4 15a1.65 1.65 0 0 0 .33 1.82l.06.06a2 2 0 0 1 0 2.83 2 2 0 0 1-2.83 0l-.06-.06a1.65 1.65 0 0 0-1.82-.33 1.65 1.65 0 0 0-1 1.51V21a2 2 0 0 1-2 2 2 2 0 0 1-2-2v-.1A1.65 1.65 0 0 0 9 19.4a1.65 1.65 0 0 0-1.82.33l-.06.06a2 2 0 0 1-2.83 0 2 2 0 0 1 0-2.83l.06-.06a1.65 1.65 0 0 0 .33-1.82 1.65 1.65 0 0 0-1.51-1H3a2 2 0 0 1-2-2 2 2 0 0 1 2-2h.1A1.65 1.65 0 0 0 4.6 9a1.65 1.65 0 0 0-.33-1.82l-.06-.06a2 2 0 0 1 0-2.83 2 2 0 0 1 2.83 0l.06.06a1.65 1.65 0 0 0 1.82.33H9a1.65 1.65 0 0 0 1-1.51V3a2 2 0 0 1 2-2 2 2 0 0 1 2 2v.1a1.65 1.65 0 0 0 1 1.51 1.65 1.65 0 0 0 1.82-.33l.06-.06a2 2 0 0 1 2.83 0 2 2 0 0 1 0 2.83l-.06.06a1.65 1.65 0 0 0-.33 1.82V9a1.65 1.65 0 0 0 1.51 1H21a2 2 0 0 1 2 2 2 2 0 0 1-2 2h-.1a1.65 1.65 0 0 0-1.51 1z"></path>
+                    </svg>
+                    <h3>核心系统设计</h3>
+                    <p>基于STM32单片机核心系统电路设计，进行语言模组分析与使用、外设功能分析与代码测试。</p>
+                    <div class="timeline-date">2025年6月-12月</div>
+                </div>
+                <div class="timeline-item">
+                    <svg class="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <line x1="3" y1="9" x2="21" y2="9"></line>
+                        <line x1="9" y1="21" x2="9" y2="9"></line>
+                    </svg>
+                    <h3>算法与界面开发</h3>
+                    <p>完成算法与界面设计与修改，进行功能测试与bug修复与优化。</p>
+                    <div class="timeline-date">2026年1月-6月</div>
+                </div>
+                <div class="timeline-item">
+                    <svg class="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M22 11.08V12a10 10 0 1 1-5.93-9.14"></path>
+                        <polyline points="22 4 12 14.01 9 11.01"></polyline>
+                    </svg>
+                    <h3>系统集成与测试</h3>
+                    <p>完成基本要求实现语音检测与识别功能、TFT高清液晶显示、LED状态指示等全部功能集成。</p>
+                    <div class="timeline-date">2026年7月-12月</div>
+                </div>
+                <div class="timeline-item">
+                    <svg class="icon-timeline" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M14 2H6a2 2 0 0 0-2 2v16a2 2 0 0 0 2 2h12a2 2 0 0 0 2-2V8z"></path>
+                        <polyline points="14 2 14 8 20 8"></polyline>
+                        <line x1="16" y1="13" x2="8" y2="13"></line>
+                        <line x1="16" y1="17" x2="8" y2="17"></line>
+                        <polyline points="10 9 9 9 8 9"></polyline>
+                    </svg>
+                    <h3>项目结题</h3>
+                    <p>开发完成人工智能语音小助手，撰写结题报告，准备相关结题材料，发表论文。</p>
+                    <div class="timeline-date">2027年1月-5月</div>
                 </div>
             </div>
         </div>
@@ -271,24 +694,59 @@
             <h2>团队成员</h2>
             <div class="team-grid">
                 <div class="team-member">
+                    <div class="team-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
                     <h3>俞诚</h3>
                     <p>信息学部，23级计科</p>
+                    <p class="team-role">负责人兼技术顾问 <span style="font-size: 12px; color: #94a3b8;">Head & Technical Advisor</span></p>
                 </div>
                 <div class="team-member">
+                    <div class="team-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
                     <h3>季文轩</h3>
                     <p>信息学部，23级计科</p>
+                    <p class="team-role">项目总监 <span style="font-size: 12px; color: #94a3b8;">Project Director</span></p>
                 </div>
                 <div class="team-member">
+                    <div class="team-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
                     <h3>李东盛</h3>
                     <p>信息学部，23级计科</p>
+                    <p class="team-role">全栈开发工程师 <span style="font-size: 12px; color: #94a3b8;">Full-Stack Developer</span></p>
                 </div>
                 <div class="team-member">
+                    <div class="team-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
                     <h3>李世星</h3>
                     <p>信息学部，23级物联网</p>
+                    <p class="team-role">物联网开发工程师 <span style="font-size: 12px; color: #94a3b8;">IoT Development Engineer</span></p>
                 </div>
                 <div class="team-member">
+                    <div class="team-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M20 21v-2a4 4 0 0 0-4-4H8a4 4 0 0 0-4 4v2"></path>
+                            <circle cx="12" cy="7" r="4"></circle>
+                        </svg>
+                    </div>
                     <h3>刘思棋</h3>
                     <p>信息学部，23级计科</p>
+                    <p class="team-role">AI 算法工程师 <span style="font-size: 12px; color: #94a3b8;">AI Algorithm Engineer</span></p>
                 </div>
             </div>
         </div>
@@ -299,10 +757,22 @@
             <h2>指导导师</h2>
             <div class="team-grid">
                 <div class="team-member">
+                    <div class="team-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        </svg>
+                    </div>
                     <h3>华进</h3>
                     <p>副教授</p>
                 </div>
                 <div class="team-member">
+                    <div class="team-icon">
+                        <svg viewBox="0 0 24 24" stroke-width="2">
+                            <path d="M22 10v6M2 10l10-5 10 5-10 5z"></path>
+                            <path d="M6 12v5c3 3 9 3 12 0v-5"></path>
+                        </svg>
+                    </div>
                     <h3>徐剑</h3>
                     <p>讲师</p>
                 </div>

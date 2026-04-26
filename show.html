@@ -298,6 +298,9 @@
             loader.load('BZ.gltf', function(gltf) {
                 model = gltf.scene;
                 
+                model.rotation.x = Math.PI / 2;
+                model.rotation.y = 0;
+                
                 // 计算模型的边界框并获取中心点
                 const box = new THREE.Box3().setFromObject(model);
                 const center = box.getCenter(new THREE.Vector3());
@@ -341,7 +344,8 @@
             requestAnimationFrame(animate);
             
             if (model && isRotating) {
-                model.rotation.y += 0.01;
+                model.rotation.x = Math.PI / 2;
+                model.rotation.z += 0.01;
             }
             
             controls.update();

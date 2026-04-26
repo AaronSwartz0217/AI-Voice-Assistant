@@ -250,6 +250,7 @@
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/build/three.min.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/controls/OrbitControls.js"></script>
     <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/GLTFLoader.js"></script>
+            <script src="https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/loaders/DRACOLoader.js"></script>
     
     <script>
         let scene, camera, renderer, controls, model, isRotating = true;
@@ -290,7 +291,11 @@
             controls.dampingFactor = 0.05;
             
             const loader = new THREE.GLTFLoader();
-            loader.load('板子.gltf', function(gltf) {
+            const dracoLoader = new THREE.DRACOLoader();
+            dracoLoader.setDecoderPath('https://cdn.jsdelivr.net/npm/three@0.132.2/examples/js/libs/draco/');
+            loader.setDRACOLoader(dracoLoader);
+            
+            loader.load('BZ.gltf', function(gltf) {
                 model = gltf.scene;
                 
                 // 计算模型的边界框并获取中心点

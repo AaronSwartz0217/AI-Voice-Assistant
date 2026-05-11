@@ -152,6 +152,78 @@
             border-bottom: 2px solid #3a7ca5;
         }
 
+        .flowchart-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+
+        .zoom-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .zoom-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 8px;
+            background: white;
+            color: #4a5568;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .zoom-btn:hover {
+            background: #4facfe;
+            color: white;
+            box-shadow: 0 4px 8px rgba(79, 172, 254, 0.3);
+        }
+
+        .zoom-btn:active {
+            transform: scale(0.95);
+        }
+
+        .zoom-level {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .flowchart-wrapper {
+            width: 100%;
+            height: 500px;
+            overflow: auto;
+            background: #f8fafc;
+            border-radius: 8px;
+            position: relative;
+            cursor: grab;
+        }
+
+        .flowchart-wrapper:active {
+            cursor: grabbing;
+        }
+
+        .flowchart-wrapper svg {
+            width: 100%;
+            height: 100%;
+            min-width: 900px;
+            min-height: 500px;
+        }
+
         .mermaid {
             background-color: #f8fafc;
             padding: 20px;
@@ -325,10 +397,39 @@
                 <div class="content-area">
                     <div class="flowchart-section" id="flowchart">
                         <h2>系统架构流程图</h2>
-                        <div class="mermaid" style="min-height: 600px;">
+                        
+                        <div class="flowchart-container">
+                            <div class="zoom-controls">
+                                <button class="zoom-btn" id="zoom-in" title="放大">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"/>
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                    </svg>
+                                </button>
+                                <span class="zoom-level">100%</span>
+                                <button class="zoom-btn" id="zoom-out" title="缩小">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                    </svg>
+                                </button>
+                                <button class="zoom-btn" id="zoom-reset" title="重置">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                                        <path d="M3 3v5h5"/>
+                                    </svg>
+                                </button>
+                                <button class="zoom-btn" id="zoom-fullscreen" title="全屏查看">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M3 3h6v6M3 21h6v-6M21 3h-6v6M21 21h-6v-6"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="flowchart-wrapper" id="flowchart-wrapper">
+                                <div class="mermaid-chart">
 flowchart TB
     subgraph 硬件端["硬件端 - 基于 BOM V1.1"]
-        Mic["驻极体麦克风(咪头)"] -->|模拟音频| SU03T["SU-03T 语音识别模组<br/>离线识别固定命令词"]
+        Mic["驻极体麦克风<br/>(咪头)"] -->|模拟音频| SU03T["SU-03T 语音识别模组<br/>离线识别固定命令词"]
         SU03T -->|串口(识别结果ID)| STM32["STM32F103RCT6<br/>主控"]
         
         Button["贴片按键 *4<br/>(KEY1~4 / RESET)"] -->|GPIO| STM32
@@ -337,7 +438,7 @@ flowchart TB
         LED["LED指示灯 *4<br/>(红/彩色RGB)"] -->|GPIO| STM32
         
         subgraph STM32_Func["STM32 本地功能"]
-            CmdParse["命令解析<br/>(识别ID->动作/文本)"]
+            CmdParse["命令解析<br/>(识别ID→动作/文本)"]
             SensorRead["传感器读取<br/>(温湿度)"]
             DisplayCtrl["液晶显示控制"]
             WifiCtrl["WiFi模块控制<br/>(AT指令)"]
@@ -369,7 +470,7 @@ flowchart TB
         HTTP_API["HTTP API服务<br/>(健康检查 / 文本对话)"]
         
         WS_Server -->|音频/文本| Router{"内容类型路由"}
-        Router -->|音频| Audio_Decode["音频解码<br/>(OPUS -> PCM)"]
+        Router -->|音频| Audio_Decode["音频解码<br/>(OPUS → PCM)"]
         Audio_Decode -->|PCM| ASR["ASR语音识别<br/>(Whisper / 阿里云 / 讯飞)"]
         ASR -->|文本| OpenClaw_Gateway["OpenClaw 网关层"]
         Router -->|文本| OpenClaw_Gateway
@@ -401,15 +502,15 @@ flowchart TB
         subgraph Skills_Layer["技能扩展层 Skills Layer"]
             direction LR
             
-            subgraph Custom_Skills["自定义Skills"]
+            subgraph Custom_Skills["自主培养 Skills"]
                 Data_Make["数据集制作<br/>(自采数据 / 阿里云PAI标注)"]
                 Train_Pipeline["训练流水线<br/>(微调LoRA / 函数调用)"]
                 Deploy_Skill["部署为OpenClaw Skill<br/>(本地或云端)"]
                 Data_Make --> Train_Pipeline --> Deploy_Skill
             end
             
-            Hub_Skills["开源Hub Skills<br/>(AgentSkills.cc)"]
-            API_Skills["API集成Skills<br/>(Composio / 第三方插件)"]
+            Hub_Skills["开源 Hub Skills<br/>(AgentSkills.cc / 复旦DataHub)"]
+            API_Skills["API 集成 Skills<br/>(Composio / 第三方插件)"]
             
             Custom_Skills --> Agent_Logic
             Hub_Skills --> Agent_Logic
@@ -417,13 +518,17 @@ flowchart TB
         end
         
         OpenClaw_Core -->|回复文本| TTS["TTS语音合成<br/>(Piper本地 / Edge TTS API)"]
-        TTS -->|PCM音频| Audio_Encode["音频编码<br/>(PCM -> OPUS)"]
+        TTS -->|PCM音频| Audio_Encode["音频编码<br/>(PCM → OPUS)"]
         Audio_Encode -->|OPUS| WS_Server
         
         OpenClaw_Core -->|纯文本回复| HTTP_API
     end
 
     HTTP_API -->|文本请求| OpenClaw_Gateway
+                                </div>
+                            </div>
+                            
+                            <p style="text-align: center; margin-top: 15px; color: #718096; font-size: 14px;">提示：使用鼠标滚轮缩放，拖动图表查看细节，或使用上方控制按钮</p>
                         </div>
                     </div>
 
@@ -781,13 +886,7 @@ navigator.mediaDevices.getUserMedia({ audio: true })
         </div>
     </footer>
 
-    <script src="https://cdn.jsdelivr.net/npm/mermaid@10.6.1/dist/mermaid.min.js"></script>
     <script>
-        mermaid.initialize({
-            startOnLoad: true,
-            theme: 'default'
-        });
-
         document.querySelectorAll('.toc a').forEach(anchor => {
             anchor.addEventListener('click', function(e) {
                 e.preventDefault();
@@ -819,6 +918,124 @@ navigator.mediaDevices.getUserMedia({ audio: true })
                 if (anchor.getAttribute('href') === `#${currentSection}`) {
                     anchor.classList.add('active');
                 }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const flowchartWrapper = document.getElementById('flowchart-wrapper');
+            const flowchartSvg = document.getElementById('flowchart-svg');
+            const zoomInBtn = document.getElementById('zoom-in');
+            const zoomOutBtn = document.getElementById('zoom-out');
+            const zoomResetBtn = document.getElementById('zoom-reset');
+            const zoomFullscreenBtn = document.getElementById('zoom-fullscreen');
+            const zoomLevelSpan = document.querySelector('.zoom-level');
+
+            let scale = 1;
+            const minScale = 0.5;
+            const maxScale = 3;
+            const scaleStep = 0.1;
+
+            function updateZoom() {
+                flowchartSvg.style.transform = `scale(${scale})`;
+                flowchartSvg.style.transformOrigin = 'center center';
+                zoomLevelSpan.textContent = `${Math.round(scale * 100)}%`;
+            }
+
+            zoomInBtn.addEventListener('click', function() {
+                if (scale < maxScale) {
+                    scale += scaleStep;
+                    updateZoom();
+                }
+            });
+
+            zoomOutBtn.addEventListener('click', function() {
+                if (scale > minScale) {
+                    scale -= scaleStep;
+                    updateZoom();
+                }
+            });
+
+            zoomResetBtn.addEventListener('click', function() {
+                scale = 1;
+                updateZoom();
+                flowchartWrapper.scrollLeft = (flowchartWrapper.scrollWidth - flowchartWrapper.clientWidth) / 2;
+                flowchartWrapper.scrollTop = (flowchartWrapper.scrollHeight - flowchartWrapper.clientHeight) / 2;
+            });
+
+            zoomFullscreenBtn.addEventListener('click', function() {
+                if (flowchartWrapper.requestFullscreen) {
+                    flowchartWrapper.requestFullscreen();
+                } else if (flowchartWrapper.webkitRequestFullscreen) {
+                    flowchartWrapper.webkitRequestFullscreen();
+                } else if (flowchartWrapper.msRequestFullscreen) {
+                    flowchartWrapper.msRequestFullscreen();
+                }
+            });
+
+            flowchartWrapper.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? -scaleStep : scaleStep;
+                const newScale = scale + delta;
+                if (newScale >= minScale && newScale <= maxScale) {
+                    scale = newScale;
+                    updateZoom();
+                }
+            }, { passive: false });
+
+            let isDragging = false;
+            let startX, startY;
+            let scrollLeft, scrollTop;
+
+            flowchartWrapper.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                startX = e.pageX - flowchartWrapper.offsetLeft;
+                startY = e.pageY - flowchartWrapper.offsetTop;
+                scrollLeft = flowchartWrapper.scrollLeft;
+                scrollTop = flowchartWrapper.scrollTop;
+            });
+
+            flowchartWrapper.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                const x = e.pageX - flowchartWrapper.offsetLeft;
+                const y = e.pageY - flowchartWrapper.offsetTop;
+                const walkX = (x - startX) * 1.5;
+                const walkY = (y - startY) * 1.5;
+                flowchartWrapper.scrollLeft = scrollLeft - walkX;
+                flowchartWrapper.scrollTop = scrollTop - walkY;
+            });
+
+            flowchartWrapper.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+
+            flowchartWrapper.addEventListener('mouseleave', function() {
+                isDragging = false;
+            });
+
+            flowchartWrapper.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    startX = e.touches[0].pageX - flowchartWrapper.offsetLeft;
+                    startY = e.touches[0].pageY - flowchartWrapper.offsetTop;
+                    scrollLeft = flowchartWrapper.scrollLeft;
+                    scrollTop = flowchartWrapper.scrollTop;
+                }
+            });
+
+            flowchartWrapper.addEventListener('touchmove', function(e) {
+                if (!isDragging || e.touches.length !== 1) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - flowchartWrapper.offsetLeft;
+                const y = e.touches[0].pageY - flowchartWrapper.offsetTop;
+                const walkX = (x - startX) * 1.5;
+                const walkY = (y - startY) * 1.5;
+                flowchartWrapper.scrollLeft = scrollLeft - walkX;
+                flowchartWrapper.scrollTop = scrollTop - walkY;
+            });
+
+            flowchartWrapper.addEventListener('touchend', function() {
+                isDragging = false;
             });
         });
     </script>

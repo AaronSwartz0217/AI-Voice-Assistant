@@ -1,0 +1,1028 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>人工智能语音小助手 - 项目详情</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #a0c4ff;
+        }
+
+        .detail-section {
+            padding: 60px 0;
+        }
+
+        .detail-section h1 {
+            text-align: center;
+            font-size: 32px;
+            margin-bottom: 40px;
+            color: #1a365d;
+        }
+
+        .content-wrapper {
+            display: flex;
+            gap: 30px;
+            max-width: 1400px;
+            margin: 0 auto;
+        }
+
+        .sidebar {
+            width: 220px;
+            flex-shrink: 0;
+            position: sticky;
+            top: 30px;
+            height: fit-content;
+        }
+
+        .toc {
+            background-color: white;
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+        }
+
+        .toc h3 {
+            color: #2c5282;
+            margin-bottom: 15px;
+            font-size: 18px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3a7ca5;
+        }
+
+        .toc ul {
+            list-style: none;
+            padding: 0;
+        }
+
+        .toc li {
+            margin-bottom: 8px;
+        }
+
+        .toc a {
+            color: #4a5568;
+            text-decoration: none;
+            font-size: 14px;
+            transition: color 0.3s ease;
+            display: block;
+            padding: 5px 10px;
+            border-radius: 4px;
+        }
+
+        .toc a:hover {
+            color: #3a7ca5;
+            background-color: #ebf8ff;
+        }
+
+        .toc .active {
+            color: #3a7ca5;
+            font-weight: bold;
+            background-color: #ebf8ff;
+        }
+
+        .content-area {
+            flex: 1;
+        }
+
+        .flowchart-section {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .flowchart-section h2 {
+            color: #2c5282;
+            margin-bottom: 25px;
+            font-size: 24px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3a7ca5;
+        }
+
+        .flowchart-container {
+            background: white;
+            border-radius: 12px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            padding: 20px;
+        }
+
+        .zoom-controls {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 8px;
+            margin-bottom: 15px;
+            padding: 10px;
+            background: #f8fafc;
+            border-radius: 8px;
+        }
+
+        .zoom-btn {
+            width: 36px;
+            height: 36px;
+            border: none;
+            border-radius: 8px;
+            background: white;
+            color: #4a5568;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            box-shadow: 0 2px 4px rgba(0,0,0,0.05);
+            transition: all 0.2s ease;
+        }
+
+        .zoom-btn:hover {
+            background: #4facfe;
+            color: white;
+            box-shadow: 0 4px 8px rgba(79, 172, 254, 0.3);
+        }
+
+        .zoom-btn:active {
+            transform: scale(0.95);
+        }
+
+        .zoom-level {
+            font-size: 14px;
+            font-weight: 600;
+            color: #4a5568;
+            min-width: 60px;
+            text-align: center;
+        }
+
+        .flowchart-wrapper {
+            width: 100%;
+            height: 600px;
+            overflow: auto;
+            background: #f8fafc;
+            border-radius: 8px;
+            position: relative;
+            cursor: grab;
+        }
+
+        .flowchart-wrapper:active {
+            cursor: grabbing;
+        }
+
+        .flowchart-wrapper svg {
+            width: 100%;
+            height: 100%;
+            min-width: 900px;
+            min-height: 500px;
+        }
+
+        .mermaid {
+            background-color: #f8fafc;
+            padding: 20px;
+            border-radius: 8px;
+            overflow-x: auto;
+        }
+
+        .mermaid svg {
+            max-width: none !important;
+            transition: transform 0.3s ease;
+        }
+
+        .section-card {
+            background-color: white;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+
+        .section-card h2 {
+            color: #2c5282;
+            margin-bottom: 25px;
+            font-size: 24px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid #3a7ca5;
+        }
+
+        .section-card h3 {
+            color: #1a365d;
+            margin: 20px 0 15px;
+            font-size: 20px;
+        }
+
+        .section-card h4 {
+            color: #2d3748;
+            margin: 15px 0 10px;
+            font-size: 16px;
+        }
+
+        .section-card p {
+            color: #4a5568;
+            margin-bottom: 12px;
+            text-indent: 2em;
+        }
+
+        .section-card ul, .section-card ol {
+            padding-left: 25px;
+            margin-bottom: 15px;
+        }
+
+        .section-card li {
+            color: #4a5568;
+            margin-bottom: 8px;
+        }
+
+        .table-wrapper {
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+
+        .tech-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 14px;
+        }
+
+        .tech-table th, .tech-table td {
+            border: 1px solid #e2e8f0;
+            padding: 10px 12px;
+            text-align: left;
+        }
+
+        .tech-table th {
+            background-color: #f0f4f8;
+            font-weight: bold;
+            color: #2c5282;
+        }
+
+        .tech-table tr:nth-child(even) {
+            background-color: #fafbfc;
+        }
+
+        .code-block {
+            background-color: #2d3748;
+            color: #e2e8f0;
+            padding: 15px;
+            border-radius: 6px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 13px;
+            overflow-x: auto;
+            margin-bottom: 15px;
+        }
+
+        .highlight {
+            background-color: #ebf8ff;
+            padding: 2px 6px;
+            border-radius: 3px;
+            font-family: 'Monaco', 'Consolas', monospace;
+            font-size: 14px;
+        }
+
+        .task-table {
+            width: 100%;
+            border-collapse: collapse;
+            font-size: 13px;
+        }
+
+        .task-table th, .task-table td {
+            border: 1px solid #e2e8f0;
+            padding: 8px 10px;
+            text-align: left;
+        }
+
+        .task-table th {
+            background-color: #0f2027;
+            color: white;
+            font-weight: bold;
+        }
+
+        .task-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 40px;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <img src="images/nantong-university-logo-1024px.png" alt="南通大学" style="height: 40px; vertical-align: middle; margin-right: 10px;">
+                    人工智能语音小助手
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">主页</a></li>
+                    <li><a href="detail.html">详情介绍</a></li>
+                    <li><a href="show.html">项目展示</a></li>
+                    <li><a href="apply.html">项目使用</a></li>
+                    <li><a href="tell.html">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="detail-section">
+        <div class="container">
+            <h1>人工智能语音小助手——大创项目技术详细说明</h1>
+            
+            <div class="content-wrapper">
+                <div class="sidebar">
+                    <div class="toc">
+                        <h3>目录导航</h3>
+                        <ul>
+                            <li><a href="#flowchart">系统架构流程图</a></li>
+                            <li><a href="#hardware">一、硬件端技术实现</a></li>
+                            <li><a href="#server">二、AI服务器端技术实现</a></li>
+                            <li><a href="#software">三、软件端技术实现</a></li>
+                            <li><a href="#protocol">四、数据流与协议规范</a></li>
+                            <li><a href="#skills">五、自主培养Skills链路</a></li>
+                            <li><a href="#metrics">六、关键技术指标</a></li>
+                        </ul>
+                    </div>
+                </div>
+                
+                <div class="content-area">
+                    <div class="flowchart-section" id="flowchart">
+                        <h2>系统架构流程图</h2>
+                        
+                        <div class="flowchart-container">
+                            <div class="zoom-controls">
+                                <button class="zoom-btn" id="zoom-in" title="放大">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="12" y1="5" x2="12" y2="19"/>
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                    </svg>
+                                </button>
+                                <span class="zoom-level">100%</span>
+                                <button class="zoom-btn" id="zoom-out" title="缩小">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <line x1="5" y1="12" x2="19" y2="12"/>
+                                    </svg>
+                                </button>
+                                <button class="zoom-btn" id="zoom-reset" title="重置">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M3 12a9 9 0 1 0 9-9 9.75 9.75 0 0 0-6.74 2.74L3 8"/>
+                                        <path d="M3 3v5h5"/>
+                                    </svg>
+                                </button>
+                                <button class="zoom-btn" id="zoom-fullscreen" title="全屏查看">
+                                    <svg width="20" height="20" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                                        <path d="M3 3h6v6M3 21h6v-6M21 3h-6v6M21 21h-6v-6"/>
+                                    </svg>
+                                </button>
+                            </div>
+                            
+                            <div class="flowchart-wrapper" id="flowchart-wrapper">
+                                <svg id="flowchart-svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 100%;">
+                                    <defs>
+                                        <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                            <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                                        </marker>
+                                    </defs>
+                                    
+                                    <rect x="30" y="30" width="220" height="200" rx="5" fill="white" stroke="#333" stroke-width="1.5"/>
+                                    <text x="140" y="55" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">硬件端</text>
+                                    
+                                    <rect x="50" y="80" width="180" height="40" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="140" y="105" text-anchor="middle" font-size="11" fill="#333">SU-03T 语音识别</text>
+                                    <text x="140" y="120" text-anchor="middle" font-size="10" fill="#666">驻极体麦克风 → 离线识别</text>
+                                    
+                                    <rect x="50" y="140" width="180" height="40" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="140" y="165" text-anchor="middle" font-size="11" fill="#333">STM32F103RCT6 主控</text>
+                                    <text x="140" y="180" text-anchor="middle" font-size="10" fill="#666">命令解析 / WiFi控制</text>
+                                    
+                                    <rect x="50" y="200" width="180" height="40" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="140" y="225" text-anchor="middle" font-size="11" fill="#333">外设模块</text>
+                                    <text x="140" y="240" text-anchor="middle" font-size="10" fill="#666">AHT25 / LCD / LED / 喇叭</text>
+                                    
+                                    <line x1="140" y="120" x2="140" y="140" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    <line x1="140" y="180" x2="140" y="200" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    
+                                    <rect x="280" y="30" width="220" height="140" rx="5" fill="white" stroke="#333" stroke-width="1.5"/>
+                                    <text x="390" y="55" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">软件端</text>
+                                    
+                                    <rect x="300" y="80" width="180" height="50" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="390" y="105" text-anchor="middle" font-size="11" fill="#333">交互界面</text>
+                                    <text x="390" y="120" text-anchor="middle" font-size="10" fill="#666">麦克风 / 扬声器 / 文本输入</text>
+                                    
+                                    <rect x="300" y="150" width="180" height="30" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="390" y="170" text-anchor="middle" font-size="11" fill="#333">WebSocket / HTTP客户端</text>
+                                    
+                                    <line x1="390" y="130" x2="390" y="150" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    
+                                    <rect x="530" y="30" width="240" height="400" rx="5" fill="white" stroke="#333" stroke-width="1.5"/>
+                                    <text x="650" y="55" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">AI服务器端</text>
+                                    
+                                    <rect x="550" y="80" width="200" height="35" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="102" text-anchor="middle" font-size="11" fill="#333">WebSocket服务端</text>
+                                    
+                                    <rect x="550" y="130" width="200" height="35" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="152" text-anchor="middle" font-size="11" fill="#333">音频解码 (OPUS→PCM)</text>
+                                    
+                                    <rect x="550" y="180" width="200" height="35" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="202" text-anchor="middle" font-size="11" fill="#333">ASR语音识别 (Whisper)</text>
+                                    
+                                    <rect x="550" y="230" width="200" height="50" rx="3" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="252" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">OpenClaw Agent</text>
+                                    <text x="650" y="268" text-anchor="middle" font-size="10" fill="#666">Ollama本地 / 云端API</text>
+                                    
+                                    <rect x="550" y="300" width="200" height="35" rx="3" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="322" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">技能扩展层</text>
+                                    <text x="650" y="338" text-anchor="middle" font-size="10" fill="#666">自主培养 / Hub / API集成</text>
+                                    
+                                    <rect x="550" y="355" width="200" height="35" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="377" text-anchor="middle" font-size="11" fill="#333">TTS语音合成 (Piper)</text>
+                                    
+                                    <rect x="550" y="405" width="200" height="35" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="427" text-anchor="middle" font-size="11" fill="#333">音频编码 (PCM→OPUS)</text>
+                                    
+                                    <line x1="650" y="105" x2="650" y="130" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    <line x1="650" y="155" x2="650" y="180" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    <line x1="650" y="205" x2="650" y="230" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    <line x1="650" y="280" x2="650" y="300" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    <line x1="650" y="340" x2="650" y="355" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    <line x1="650" y="380" x2="650" y="405" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    
+                                    <line x1="250" y="160" x2="280" y="100" stroke="#333" stroke-width="1.5" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+                                    <text x="265" y="155" fill="#666" font-size="10">WebSocket</text>
+                                    
+                                    <line x1="480" y="170" x2="530" y="100" stroke="#333" stroke-width="1.5" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+                                    <text x="505" y="165" fill="#666" font-size="10">WebSocket/HTTP</text>
+                                </svg>
+                            </div>
+                            
+                            <p style="text-align: center; margin-top: 15px; color: #718096; font-size: 14px;">提示：使用鼠标滚轮缩放，拖动图表查看细节，或使用上方控制按钮</p>
+                        </div>
+                    </div>
+
+                    <div class="section-card" id="hardware">
+                        <h2>一、硬件端详细技术实现</h2>
+                    
+                    <h3>1.1 主控单元：STM32F103RCT6</h3>
+                    <ul>
+                        <li><strong>内核：</strong>ARM Cortex-M3，最高72MHz工作频率</li>
+                        <li><strong>存储：</strong>256KB Flash，48KB SRAM</li>
+                        <li><strong>外设资源：</strong>3个USART、2个I2C、2个SPI、2个I2S、12位ADC×2（16通道）、51个GPIO</li>
+                        <li><strong>封装：</strong>LQFP-64</li>
+                    </ul>
+
+                    <h3>1.2 离线语音识别模组：SU-03T</h3>
+                    <div class="table-wrapper">
+                        <table class="tech-table">
+                            <tr><th>参数</th><th>数值</th></tr>
+                            <tr><td>核心处理器</td><td>32bit RISC，240MHz，支持DSP+FPU</td></tr>
+                            <tr><td>语音识别算法</td><td>神经网络唤醒引擎 + 语音识别引擎</td></tr>
+                            <tr><td>支持命令词数量</td><td>最多50条（可自定义）</td></tr>
+                            <tr><td>识别响应时间</td><td>&lt;300ms</td></tr>
+                            <tr><td>工作模式</td><td>串口输出识别结果（ID或预设字符串）</td></tr>
+                            <tr><td>供电</td><td>5V，平均电流&lt;80mA</td></tr>
+                        </table>
+                    </div>
+                    <p>配置方式：通过USB连接PC，使用官方配置工具（SU-03T Config Tool）烧录命令词表。每条命令词可绑定一个4字节的识别码，STM32通过串口接收该识别码，执行对应的动作。</p>
+                    <p>信号链路：驻极体麦克风（模拟信号） → SU-03T内部ADC → 语音特征提取 → 神经网络推理 → 识别码 → UART TX（TTL电平，波特率115200） → STM32 USART1接收。</p>
+
+                    <h3>1.3 温湿度传感器：AHT25</h3>
+                    <ul>
+                        <li><strong>通信接口：</strong>I2C（标准模式100kHz，快速模式400kHz）</li>
+                        <li><strong>测量范围：</strong>温度-40~+80℃，湿度0~100%RH</li>
+                        <li><strong>精度：</strong>典型值±0.3℃（温度），±2%RH（湿度）</li>
+                        <li><strong>分辨率：</strong>0.01℃ / 0.024%RH</li>
+                        <li><strong>采集周期：</strong>建议100ms一次，实际项目中设置为每2秒采集一次，降低总线负载。</li>
+                        <li><strong>I2C地址：</strong>0x38（7位）</li>
+                    </ul>
+                    <p>读取流程：发送初始化命令（0xBE）→等待80ms→发送测量触发命令（0xAC+0x33+0x00）→等待80ms→读取6字节数据（温湿度原始值）→CRC校验→转换为实际物理量。</p>
+
+                    <h3>1.4 液晶显示屏：1.47寸TFT</h3>
+                    <ul>
+                        <li><strong>驱动IC：</strong>ST7789V（SPI接口）</li>
+                        <li><strong>分辨率：</strong>172×320（RGB 65K色）</li>
+                        <li><strong>接口引脚：</strong>SCL、SDA、DC、RST、CS、BL（背光控制）</li>
+                        <li><strong>显示内容：</strong>当前对话状态（录音中/识别中/回复中）、温湿度数值、网络连接状态、时间（需外置RTC或由服务器授时）。</li>
+                    </ul>
+                    <p>显示刷新策略：采用双缓冲机制，使用STM32的DMA+SPI传输，帧率可达30fps以上，保证UI流畅。</p>
+
+                    <h3>1.5 音频采集与播放进阶设计（针对自由对话需求）</h3>
+                    <p>BOM V1.1中SU-03T不支持输出原始音频，为实现云端大模型自由对话，额外增加以下硬件：</p>
+                    
+                    <h4>a) 数字麦克风：INMP441（I2S接口）</h4>
+                    <div class="table-wrapper">
+                        <table class="tech-table">
+                            <tr><th>参数</th><th>数值</th></tr>
+                            <tr><td>信噪比（SNR）</td><td>61dBA</td></tr>
+                            <tr><td>灵敏度</td><td>-26dBFS</td></tr>
+                            <tr><td>工作电压</td><td>1.8~3.6V</td></tr>
+                            <tr><td>输出格式</td><td>I2S，24位，采样率可配置（8kHz~96kHz）</td></tr>
+                            <tr><td>连接方式</td><td>SCK（BCLK）、WS（LRCK）、SD（DATA）</td></tr>
+                        </table>
+                    </div>
+                    <p><strong>STM32 I2S配置：</strong></p>
+                    <ul>
+                        <li>工作模式：主模式接收（Master RX）</li>
+                        <li>数据格式：16位或24位左对齐，PCMSYNC模式</li>
+                        <li>采样率：16kHz（兼顾语音质量和网络带宽）</li>
+                        <li>DMA双缓冲：使用两个缓冲区乒乓接收，避免数据丢失。</li>
+                    </ul>
+                    <p><strong>音频预处理流水线（在STM32内完成）：</strong></p>
+                    <ol>
+                        <li>从I2S DMA缓冲区读取原始PCM（16kHz，16bit）</li>
+                        <li>预加重滤波：一阶高通，系数0.97</li>
+                        <li>分帧：25ms帧长，10ms帧移（每帧400采样点）</li>
+                        <li>加汉明窗：减少频谱泄漏</li>
+                        <li>VAD检测：计算每帧能量（对数域），当连续3帧超过阈值时判定为语音开始，连续10帧低于阈值时判定为结束</li>
+                        <li>降噪（可选）：谱减法或MMSE，仅在低信噪比环境下启用（通过能量方差判断环境噪声等级）</li>
+                    </ol>
+
+                    <h4>b) 音频功放与喇叭</h4>
+                    <ul>
+                        <li><strong>功放芯片：</strong>NS8002（AB类，3W输出，SOP-8封装）</li>
+                        <li><strong>输入信号：</strong>STM32的DAC输出（12位分辨率）或PWM滤波输出</li>
+                        <li><strong>连接方式：</strong>音频信号经10uF隔直电容 → 功放IN+ → 功放OUT+/OUT- → 喇叭（4Ω，3W）</li>
+                    </ul>
+                    <p>音频播放流程：服务器返回的OPUS音频 → STM32解码（或透传给硬件解码器） → 转换为PCM → 通过DMA传输到DAC → 功放 → 喇叭发声。</p>
+
+                    <h3>1.6 无线通信模块：ESP-01S (ESP8266)</h3>
+                    <ul>
+                        <li><strong>核心：</strong>ESP8266，80MHz，内置TCP/IP协议栈</li>
+                        <li><strong>工作模式：</strong>STA模式，连接家庭/实验室WiFi</li>
+                        <li><strong>接口：</strong>UART2与STM32连接（TX/RX，波特率115200）</li>
+                        <li><strong>通信协议：</strong>AT指令集实现WebSocket连接</li>
+                    </ul>
+                    <p><strong>AT指令序列示例：</strong></p>
+                    <div class="code-block">AT+CIPSTART="WS","ws://服务器IP:8000/ws/voice",,,"音频数据"</div>
+                    <p>STM32通过轮询或空闲中断接收服务器返回的音频数据（二进制帧），实时送入扬声器播放。</p>
+                    <p>为保证实时性，采用以下优化：</p>
+                    <ul>
+                        <li>将ESP-01S的串口接收缓冲区设为2KB，DMA接收</li>
+                        <li>服务器端采用分块传输，每块音频长度约200ms，降低端到端延迟</li>
+                        <li>心跳包：每30秒发送一次ping，保持WebSocket长连接</li>
+                    </ul>
+
+                    <h3>1.7 电源管理</h3>
+                    <ul>
+                        <li><strong>输入：</strong>Mini USB (5V/2A)</li>
+                        <li><strong>稳压：</strong>AMS1117-3.3，输出3.3V给STM32、传感器、液晶、SU-03T（部分）供电</li>
+                        <li><strong>保护：</strong>自恢复保险F1（1812封装，1.1A），防反接二极管D3（1N5819WS）</li>
+                        <li><strong>去耦电容布局：</strong>每个电源引脚就近放置0.1uF陶瓷电容，大容量钽电容（47uF/16V）用于稳定瞬态电流</li>
+                    </ul>
+
+                    <h3>1.8 硬件端状态机与任务调度</h3>
+                    <p>采用FreeRTOS进行任务划分：</p>
+                    <div class="table-wrapper">
+                        <table class="task-table">
+                            <tr><th>任务名称</th><th>优先级</th><th>周期/触发</th><th>功能</th></tr>
+                            <tr><td>AudioCaptureTask</td><td>高</td><td>I2S DMA半满中断</td><td>读取麦克风PCM，存入环形缓冲区</td></tr>
+                            <tr><td>VADTask</td><td>高</td><td>每当新帧到达</td><td>检测语音活动，设置语音标志位</td></tr>
+                            <tr><td>AudioSendTask</td><td>中</td><td>当语音段结束时</td><td>压缩PCM为OPUS，通过队列发送给WiFi任务</td></tr>
+                            <tr><td>WiFiRecvTask</td><td>中</td><td>串口空闲中断</td><td>接收服务器音频数据，存入播放缓冲区</td></tr>
+                            <tr><td>AudioPlayTask</td><td>中</td><td>DMA传输完成中断</td><td>从播放缓冲区取数据送DAC</td></tr>
+                            <tr><td>UIDisplayTask</td><td>低</td><td>200ms</td><td>更新LCD显示（温度、状态）</td></tr>
+                            <tr><td>SensorReadTask</td><td>低</td><td>2s</td><td>读取AHT25温湿度</td></tr>
+                            <tr><td>KeyScanTask</td><td>低</td><td>20ms</td><td>扫描按键，处理用户输入</td></tr>
+                        </table>
+                    </div>
+                </div>
+
+                <div class="section-card" id="server">
+                    <h2>二、AI服务器端详细技术实现</h2>
+                    
+                    <h3>2.1 整体架构</h3>
+                    <ul>
+                        <li><strong>Web框架：</strong>FastAPI（Python，异步支持）</li>
+                        <li><strong>WebSocket端点：</strong>/ws/voice，处理硬件端、网页端、手机端的音频流</li>
+                        <li><strong>HTTP端点：</strong>/api/chat（文本对话）、/api/health（健康检查）</li>
+                    </ul>
+
+                    <h3>2.2 语音识别（ASR）</h3>
+                    <p>采用Whisper（OpenAI开源模型）的本地部署版本：</p>
+                    <div class="table-wrapper">
+                        <table class="tech-table">
+                            <tr><th>参数</th><th>选择</th></tr>
+                            <tr><td>模型版本</td><td>base（74M参数）或small（244M参数）</td></tr>
+                            <tr><td>语言</td><td>中文（--language zh）</td></tr>
+                            <tr><td>推理后端</td><td>faster-whisper（CTranslate2）或原版PyTorch</td></tr>
+                            <tr><td>解码方式</td><td>集束搜索（beam_size=5）</td></tr>
+                            <tr><td>实时因子</td><td>0.3~0.5（依赖GPU）</td></tr>
+                        </table>
+                    </div>
+                    <p>音频预处理：服务器接收到OPUS帧后，先解码为16kHz 16bit PCM，使用libsox进行静音切除（silence效果器），然后送入Whisper模型。</p>
+                    <p>若网络条件允许，也可调用阿里云智能语音交互或讯飞语音听写的API，利用其商业级准确率和多方言支持。</p>
+
+                    <h3>2.3 大模型集成（双方案）</h3>
+                    
+                    <h4>方案A：阿里云百炼 + GPT-OSS-20B（推荐）</h4>
+                    <ul>
+                        <li><strong>模型名称：</strong>gpt-oss-20b</li>
+                        <li><strong>API端点：</strong><span class="highlight">https://dashscope.aliyuncs.com/api/v1/services/aigc/text-generation/generation</span></li>
+                        <li><strong>认证方式：</strong>API Key（从阿里云控制台获取）</li>
+                        <li><strong>计费：</strong>新用户赠送9000万Tokens免费额度，足够大创项目全程使用</li>
+                        <li><strong>部署优势：</strong>无需自备GPU，即开即用，支持高并发流式输出</li>
+                    </ul>
+                    <p><strong>调用参数：</strong></p>
+                    <div class="code-block">{
+  "model": "gpt-oss-20b",
+  "input": {
+    "messages": [
+      {"role": "system", "content": "你是一个智能语音助手..."},
+      {"role": "user", "content": "用户文本"}
+    ]
+  },
+  "parameters": {
+    "max_tokens": 1024,
+    "temperature": 0.7,
+    "top_p": 0.9,
+    "stream": true
+  }
+}</div>
+
+                    <h4>方案B：本地Ollama + GPT-OSS-20B（离线部署）</h4>
+                    <ul>
+                        <li><strong>部署方式：</strong>ollama run gpt-oss-20b</li>
+                        <li><strong>硬件要求：</strong>NVIDIA RTX 4090（24GB VRAM）或同等级别</li>
+                        <li><strong>量化方法：</strong>使用MXFP4量化，显存占用降至16GB，普通消费级显卡可运行</li>
+                        <li><strong>推理速度：</strong>10~15 tokens/s（端到端对话延迟1~3秒）</li>
+                    </ul>
+
+                    <h3>2.4 Agent技能系统：OpenClaw深入集成</h3>
+                    <p>OpenClaw（龙虾）是一个开源的AI Agent执行网关，支持私有化部署，数据本地可控。</p>
+                    <p><strong>架构层级：</strong></p>
+                    <ul>
+                        <li><strong>控制网关层：</strong>负责请求路由、API签名、安全沙箱（限制敏感操作）。</li>
+                        <li><strong>智能体单元：</strong>基于ReAct模式（Reason + Act），循环执行“思考→行动→观察”直到任务完成。</li>
+                        <li><strong>技能扩展层：</strong>所有技能以Python函数或HTTP API形式注册，Agent根据用户意图自动选择调用。</li>
+                    </ul>
+                    <p><strong>与LLM的交互流程：</strong></p>
+                    <div class="code-block">用户文本 → Agent接收 → 构造system prompt（包含可用工具列表） → 调用LLM → 
+LLM返回function call（工具名称+参数） → Agent执行函数 → 获取结果 → 
+再次调用LLM（包含函数调用结果） → 生成最终答案</div>
+                    <p><strong>技能来源：</strong></p>
+                    <ul>
+                        <li><strong>自主培养：</strong>编写自定义Python工具（如控制实验室灯、查询课程表），注册到OpenClaw</li>
+                        <li><strong>开源Hub：</strong>从AgentSkills.cc下载社区技能，一键导入</li>
+                        <li><strong>API集成：</strong>使用Composio等插件，将GitHub、Gmail、飞书等第三方服务作为技能</li>
+                    </ul>
+
+                    <h3>2.5 语音合成（TTS）</h3>
+                    <div class="table-wrapper">
+                        <table class="tech-table">
+                            <tr><th>方案</th><th>特点</th><th>使用场景</th></tr>
+                            <tr><td>Piper（本地）</td><td>离线，轻量，支持40+语言，音色可定制</td><td>完全离线环境</td></tr>
+                            <tr><td>Edge TTS API</td><td>免费，音质好，在线</td><td>临时测试或演示</td></tr>
+                            <tr><td>阿里云TTS</td><td>商业级，支持情感和语速调节</td><td>需要高质量语音时（消耗免费额度）</td></tr>
+                        </table>
+                    </div>
+                    <p>本项目采用Piper的zh_CN-huayan-medium模型，输出16kHz PCM，再用OPUS编码回传，保证低带宽消耗。</p>
+
+                    <h3>2.6 音频编解码与传输优化</h3>
+                    <ul>
+                        <li><strong>编码器：</strong>libopus（C库），在服务器和硬件端均使用</li>
+                        <li><strong>编码参数：</strong>bitrate=32kbps，complexity=5（平衡CPU与压缩比），frame_size=20ms</li>
+                        <li><strong>传输协议：</strong>WebSocket（二进制帧）</li>
+                        <li><strong>打包策略：</strong>服务器每生成200ms音频（10帧OPUS），立即发送一个WebSocket帧，实现流式播放，降低首字延迟。</li>
+                    </ul>
+
+                    <h3>2.7 云端部署（阿里云ECS）</h3>
+                    <ul>
+                        <li><strong>实例规格：</strong>ecs.g6.xlarge（4核16GB，若有GPU可选gn6i）</li>
+                        <li><strong>操作系统：</strong>Ubuntu 22.04 LTS</li>
+                        <li><strong>部署工具：</strong>Docker + Docker Compose（包含Whisper、OpenClaw、TTS等容器）</li>
+                        <li><strong>反向代理：</strong>Nginx（处理WebSocket升级，SSL终止）</li>
+                        <li><strong>监控：</strong>阿里云CloudMonitor（CPU、内存、网络流量）</li>
+                    </ul>
+                </div>
+
+                <div class="section-card" id="software">
+                    <h2>三、软件端（网页与移动端）技术实现</h2>
+                    
+                    <h3>3.1 网页前端</h3>
+                    <ul>
+                        <li><strong>技术栈：</strong>原生HTML5 + Tailwind CSS + Vanilla JavaScript</li>
+                        <li><strong>录音实现：</strong>MediaRecorder API，音频格式webm（Opus），采样率16kHz</li>
+                        <li><strong>WebSocket连接：</strong>浏览器原生WebSocket API，二进制帧接收和发送</li>
+                        <li><strong>PWA支持：</strong>配置manifest.json和Service Worker，实现“添加到主屏幕”功能，离线时显示缓存界面。</li>
+                    </ul>
+                    <p><strong>代码结构：</strong></p>
+                    <div class="code-block">let ws = new WebSocket('wss://server/ws/voice');
+ws.binaryType = 'arraybuffer';
+
+// 录音
+navigator.mediaDevices.getUserMedia({ audio: true })
+  .then(stream => {
+    mediaRecorder = new MediaRecorder(stream, { mimeType: 'audio/webm' });
+    mediaRecorder.ondataavailable = (e) => {
+      if (ws.readyState === WebSocket.OPEN) ws.send(e.data);
+    };
+  });</div>
+
+                    <h3>3.2 移动端打包</h3>
+                    <p>由于网页已适配移动端（响应式CSS），使用Capacitor或PWA直接打包为Android/iOS应用，无需重复开发原生。Capacitor会将网页包裹在WebView中，并提供原生插件访问录音权限。</p>
+                </div>
+
+                <div class="section-card" id="protocol">
+                    <h2>四、整体数据流与协议规范</h2>
+                    
+                    <h3>4.1 上行（客户端→服务器）消息格式</h3>
+                    <div class="table-wrapper">
+                        <table class="tech-table">
+                            <tr><th>字段</th><th>类型</th><th>说明</th></tr>
+                            <tr><td>type</td><td>string</td><td>固定为"audio"或"text"</td></tr>
+                            <tr><td>data</td><td>base64</td><td>音频数据（OPUS编码）或文本内容</td></tr>
+                            <tr><td>seq</td><td>uint32</td><td>包序号，用于丢包检测和重传</td></tr>
+                            <tr><td>timestamp</td><td>uint64</td><td>毫秒级时间戳（用于延迟统计）</td></tr>
+                        </table>
+                    </div>
+                    <p>服务器收到后，回复ACK（序号确认）。</p>
+
+                    <h3>4.2 下行（服务器→客户端）消息格式</h3>
+                    <div class="table-wrapper">
+                        <table class="tech-table">
+                            <tr><th>字段</th><th>类型</th><th>说明</th></tr>
+                            <tr><td>type</td><td>string</td><td>"audio"/"text"/"status"</td></tr>
+                            <tr><td>data</td><td>base64</td><td>音频PCM-OPUS或文本回复</td></tr>
+                            <tr><td>seq_ack</td><td>uint32</td><td>确认收到的上行包序号</td></tr>
+                        </table>
+                    </div>
+                    <p>当type="status"时，data包含JSON状态信息（如{"state":"processing"}）。</p>
+
+                    <h3>4.3 端到端延迟拆解</h3>
+                    <div class="table-wrapper">
+                        <table class="tech-table">
+                            <tr><th>阶段</th><th>典型耗时</th></tr>
+                            <tr><td>硬件端采集+OPUS编码</td><td>40ms</td></tr>
+                            <tr><td>WiFi上传</td><td>10~30ms</td></tr>
+                            <tr><td>服务器ASR</td><td>200~400ms</td></tr>
+                            <tr><td>LLM推理（云端）</td><td>500~1500ms</td></tr>
+                            <tr><td>TTS合成</td><td>100~200ms</td></tr>
+                            <tr><td>OPUS编码+下行</td><td>30ms</td></tr>
+                            <tr><td>硬件端解码播放</td><td>10ms</td></tr>
+                            <tr><td><strong>总计</strong></td><td><strong>约900~2200ms</strong></td></tr>
+                        </table>
+                    </div>
+                    <p>通过优化（模型量化、流式输出）可降低至1秒以内。</p>
+                </div>
+
+                <div class="section-card">
+                    <h2>五、自主培养Skills的完整技术链路</h2>
+                    <p><strong>目标：</strong>训练专门针对智能家居控制或实验室设备的技能，提高特定指令的准确率。</p>
+
+                    <h3>数据采集</h3>
+                    <p>使用阿里云PAI DataWorks + 语音标注模板，录制并标注2000条命令（如“打开空调”、“设定温度26度”）。</p>
+                    <p>离线增强：对原始音频添加噪声、变速、音量变化，扩充至8000条。</p>
+
+                    <h3>预处理</h3>
+                    <p>音频→Whisper转录为文本→过滤识别错误→人工校对→生成（文本，意图，槽位）三元组。</p>
+
+                    <h3>训练流程</h3>
+                    <p>选择预训练模型（如Qwen-2B或ChatGLM3-6B），使用LoRA方法微调，训练目标为function calling准确率。</p>
+                    <p>训练环境：阿里云PAI-DSW（单卡V100），batch_size=8，学习率2e-4，训练5个epoch。</p>
+
+                    <h3>部署</h3>
+                    <p>微调后的LoRA适配器与基础模型合并，上传至Ollama或vLLM。</p>
+                    <p>在OpenClaw中配置新的function schema，并链接到合并后的模型。</p>
+
+                    <h3>验证</h3>
+                    <p>在测试集上计算意图识别F1-score，目标&gt;90%。</p>
+                </div>
+
+                <div class="section-card" id="metrics">
+                    <h2>六、关键技术指标汇总</h2>
+                    <div class="table-wrapper">
+                        <table class="tech-table">
+                            <tr><th>指标</th><th>数值</th></tr>
+                            <tr><td>本地语音唤醒响应延时</td><td>&lt;300ms</td></tr>
+                            <tr><td>云端自由对话端到端延时</td><td>1~2s</td></tr>
+                            <tr><td>温湿度测量精度</td><td>±0.3℃ / ±2%RH</td></tr>
+                            <tr><td>硬件成本</td><td>约70元（不含WiFi模组+麦克风）</td></tr>
+                            <tr><td>语音采样率</td><td>16kHz / 16bit</td></tr>
+                            <tr><td>网络传输码率</td><td>32kbps OPUS</td></tr>
+                            <tr><td>支持并发连接数（单服务器）</td><td>100路（普通ECS）</td></tr>
+                        </table>
+                    </div>
+                    <p style="margin-top: 15px; font-style: italic; color: #718096;">以上为人工智能语音小助手项目的完整技术详细说明，可以直接用于PPT中“技术方案”部分，也可以作为技术文档附录。</p>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025-2027 南通大学杏林学院 人工智能语音小助手项目组</p>
+        </div>
+    </footer>
+
+    <script>
+        document.querySelectorAll('.toc a').forEach(anchor => {
+            anchor.addEventListener('click', function(e) {
+                e.preventDefault();
+                const targetId = this.getAttribute('href');
+                const targetElement = document.querySelector(targetId);
+                if (targetElement) {
+                    targetElement.scrollIntoView({ behavior: 'smooth' });
+                    
+                    document.querySelectorAll('.toc a').forEach(a => a.classList.remove('active'));
+                    this.classList.add('active');
+                }
+            });
+        });
+
+        window.addEventListener('scroll', function() {
+            const sections = document.querySelectorAll('.section-card, .flowchart-section');
+            let currentSection = '';
+            
+            sections.forEach(section => {
+                const sectionTop = section.offsetTop;
+                const sectionHeight = section.offsetHeight;
+                if (window.scrollY >= sectionTop - 200 && window.scrollY < sectionTop + sectionHeight - 200) {
+                    currentSection = section.getAttribute('id');
+                }
+            });
+            
+            document.querySelectorAll('.toc a').forEach(anchor => {
+                anchor.classList.remove('active');
+                if (anchor.getAttribute('href') === `#${currentSection}`) {
+                    anchor.classList.add('active');
+                }
+            });
+        });
+
+        document.addEventListener('DOMContentLoaded', function() {
+            const flowchartWrapper = document.getElementById('flowchart-wrapper');
+            const zoomInBtn = document.getElementById('zoom-in');
+            const zoomOutBtn = document.getElementById('zoom-out');
+            const zoomResetBtn = document.getElementById('zoom-reset');
+            const zoomFullscreenBtn = document.getElementById('zoom-fullscreen');
+            const zoomLevelSpan = document.querySelector('.zoom-level');
+
+            let scale = 1;
+            const minScale = 0.5;
+            const maxScale = 3;
+            const scaleStep = 0.1;
+
+            function updateZoom() {
+                const mermaidSvg = document.querySelector('.flowchart-wrapper svg');
+                if (mermaidSvg) {
+                    mermaidSvg.style.transform = `scale(${scale})`;
+                    mermaidSvg.style.transformOrigin = 'center center';
+                }
+                zoomLevelSpan.textContent = `${Math.round(scale * 100)}%`;
+            }
+
+            zoomInBtn.addEventListener('click', function() {
+                if (scale < maxScale) {
+                    scale += scaleStep;
+                    updateZoom();
+                }
+            });
+
+            zoomOutBtn.addEventListener('click', function() {
+                if (scale > minScale) {
+                    scale -= scaleStep;
+                    updateZoom();
+                }
+            });
+
+            zoomResetBtn.addEventListener('click', function() {
+                scale = 1;
+                updateZoom();
+                flowchartWrapper.scrollLeft = (flowchartWrapper.scrollWidth - flowchartWrapper.clientWidth) / 2;
+                flowchartWrapper.scrollTop = (flowchartWrapper.scrollHeight - flowchartWrapper.clientHeight) / 2;
+            });
+
+            zoomFullscreenBtn.addEventListener('click', function() {
+                if (flowchartWrapper.requestFullscreen) {
+                    flowchartWrapper.requestFullscreen();
+                } else if (flowchartWrapper.webkitRequestFullscreen) {
+                    flowchartWrapper.webkitRequestFullscreen();
+                } else if (flowchartWrapper.msRequestFullscreen) {
+                    flowchartWrapper.msRequestFullscreen();
+                }
+            });
+
+            flowchartWrapper.addEventListener('wheel', function(e) {
+                e.preventDefault();
+                const delta = e.deltaY > 0 ? -scaleStep : scaleStep;
+                const newScale = scale + delta;
+                if (newScale >= minScale && newScale <= maxScale) {
+                    scale = newScale;
+                    updateZoom();
+                }
+            }, { passive: false });
+
+            let isDragging = false;
+            let startX, startY;
+            let scrollLeft, scrollTop;
+
+            flowchartWrapper.addEventListener('mousedown', function(e) {
+                isDragging = true;
+                startX = e.pageX - flowchartWrapper.offsetLeft;
+                startY = e.pageY - flowchartWrapper.offsetTop;
+                scrollLeft = flowchartWrapper.scrollLeft;
+                scrollTop = flowchartWrapper.scrollTop;
+            });
+
+            flowchartWrapper.addEventListener('mousemove', function(e) {
+                if (!isDragging) return;
+                e.preventDefault();
+                const x = e.pageX - flowchartWrapper.offsetLeft;
+                const y = e.pageY - flowchartWrapper.offsetTop;
+                const walkX = (x - startX) * 1.5;
+                const walkY = (y - startY) * 1.5;
+                flowchartWrapper.scrollLeft = scrollLeft - walkX;
+                flowchartWrapper.scrollTop = scrollTop - walkY;
+            });
+
+            flowchartWrapper.addEventListener('mouseup', function() {
+                isDragging = false;
+            });
+
+            flowchartWrapper.addEventListener('mouseleave', function() {
+                isDragging = false;
+            });
+
+            flowchartWrapper.addEventListener('touchstart', function(e) {
+                if (e.touches.length === 1) {
+                    isDragging = true;
+                    startX = e.touches[0].pageX - flowchartWrapper.offsetLeft;
+                    startY = e.touches[0].pageY - flowchartWrapper.offsetTop;
+                    scrollLeft = flowchartWrapper.scrollLeft;
+                    scrollTop = flowchartWrapper.scrollTop;
+                }
+            });
+
+            flowchartWrapper.addEventListener('touchmove', function(e) {
+                if (!isDragging || e.touches.length !== 1) return;
+                e.preventDefault();
+                const x = e.touches[0].pageX - flowchartWrapper.offsetLeft;
+                const y = e.touches[0].pageY - flowchartWrapper.offsetTop;
+                const walkX = (x - startX) * 1.5;
+                const walkY = (y - startY) * 1.5;
+                flowchartWrapper.scrollLeft = scrollLeft - walkX;
+                flowchartWrapper.scrollTop = scrollTop - walkY;
+            });
+
+            flowchartWrapper.addEventListener('touchend', function() {
+                isDragging = false;
+            });
+        });
+    </script>
+</body>
+</html>

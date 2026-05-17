@@ -1,0 +1,347 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>联系我们 - 人工智能语音小助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f0f2f5;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #a0c4ff;
+        }
+        
+        .contact-section {
+            padding: 80px 0;
+            background-color: white;
+        }
+        
+        .contact-section h1 {
+            text-align: center;
+            font-size: 36px;
+            margin-bottom: 60px;
+            color: #1a365d;
+        }
+        
+        .contact-container {
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        
+        .contact-table {
+            width: 100%;
+            border-collapse: collapse;
+            margin-bottom: 40px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            border-radius: 10px;
+            overflow: hidden;
+        }
+        
+        .contact-table th {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 15px;
+            text-align: left;
+            font-weight: bold;
+        }
+        
+        .contact-table td {
+            padding: 12px 15px;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .contact-table tr:nth-child(even) {
+            background-color: #f8fafc;
+        }
+        
+        .contact-table tr:hover {
+            background-color: #edf2f7;
+        }
+        
+        .copy-btn {
+            background-color: #3182ce;
+            color: white;
+            border: none;
+            padding: 6px 12px;
+            border-radius: 4px;
+            cursor: pointer;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .copy-btn:hover {
+            background-color: #2b6cb0;
+            transform: translateY(-1px);
+        }
+        
+        .copy-btn:active {
+            transform: translateY(0);
+        }
+        
+        .instructor-section {
+            margin-top: 60px;
+        }
+        
+        .instructor-card {
+            background-color: #f8fafc;
+            padding: 30px;
+            border-radius: 10px;
+            box-shadow: 0 4px 15px rgba(0,0,0,0.05);
+            margin-bottom: 30px;
+        }
+        
+        .instructor-card h3 {
+            color: #2c5282;
+            margin-bottom: 20px;
+            font-size: 20px;
+        }
+        
+        .instructor-info {
+            margin-bottom: 15px;
+        }
+        
+        .instructor-info strong {
+            color: #2d3748;
+            margin-right: 10px;
+        }
+        
+        .instructor-achievements {
+            margin-top: 20px;
+            padding-top: 20px;
+            border-top: 1px solid #e2e8f0;
+        }
+        
+        .footer {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 40px 0;
+            text-align: center;
+            margin-top: 60px;
+        }
+        
+        .footer p {
+            margin-bottom: 10px;
+        }
+        
+        .notification {
+            position: fixed;
+            top: 20px;
+            right: 20px;
+            background-color: #48bb78;
+            color: white;
+            padding: 12px 20px;
+            border-radius: 4px;
+            box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+            opacity: 0;
+            transform: translateY(-20px);
+            transition: all 0.3s ease;
+            z-index: 1000;
+        }
+        
+        .notification.show {
+            opacity: 1;
+            transform: translateY(0);
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">
+                    <img src="images/nantong-university-logo-1024px.png" alt="南通大学" style="height: 40px; vertical-align: middle; margin-right: 10px;">
+                    人工智能语音小助手
+                </div>
+                <ul class="nav-links">
+                    <li><a href="index.html">主页</a></li>
+                    <li><a href="detail.html">详情介绍</a></li>
+                    <li><a href="show.html">项目展示</a></li>
+                    <li><a href="apply.html">项目使用</a></li>
+                    <li><a href="tell.html">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+    
+    <section class="contact-section">
+        <div class="container">
+            <h1>联系我们</h1>
+            <div class="contact-container">
+                <h2 style="color: #2c5282; margin-bottom: 30px;">团队成员联系方式</h2>
+                <table class="contact-table">
+                    <thead>
+                        <tr>
+                            <th>姓名</th>
+                            <th>学部</th>
+                            <th>年级、专业</th>
+                            <th>联系电话</th>
+                            <th>操作</th>
+                        </tr>
+                    </thead>
+                    <tbody>
+                        <tr>
+                            <td>俞诚</td>
+                            <td>信息学部</td>
+                            <td>23级计科</td>
+                            <td>15722968652</td>
+                            <td><button class="copy-btn" onclick="copyToClipboard('15722968652')">复制</button></td>
+                        </tr>
+                        <tr>
+                            <td>李东盛</td>
+                            <td>信息学部</td>
+                            <td>23级计科</td>
+                            <td>18098302488</td>
+                            <td><button class="copy-btn" onclick="copyToClipboard('18098302488')">复制</button></td>
+                        </tr>
+                        <tr>
+                            <td>刘思棋</td>
+                            <td>信息学部</td>
+                            <td>23级计科</td>
+                            <td>15240234926</td>
+                            <td><button class="copy-btn" onclick="copyToClipboard('15240234926')">复制</button></td>
+                        </tr>
+                        <tr>
+                            <td>季文轩</td>
+                            <td>信息学部</td>
+                            <td>23级计科</td>
+                            <td>13186565887</td>
+                            <td><button class="copy-btn" onclick="copyToClipboard('13186565887')">复制</button></td>
+                        </tr>
+                        <tr>
+                            <td>李世星</td>
+                            <td>信息学部</td>
+                            <td>23级物联网</td>
+                            <td>18013420316</td>
+                            <td><button class="copy-btn" onclick="copyToClipboard('18013420316')">复制</button></td>
+                        </tr>
+                    </tbody>
+                </table>
+                
+                <div class="instructor-section">
+                    <h2 style="color: #2c5282; margin-bottom: 30px;">指导教师</h2>
+                    
+                    <div class="instructor-card">
+                        <h3>第一指导教师</h3>
+                        <div class="instructor-info">
+                            <strong>姓名：</strong>华进
+                        </div>
+                        <div class="instructor-info">
+                            <strong>联系电话：</strong>13921615700
+                            <button class="copy-btn" style="margin-left: 10px;" onclick="copyToClipboard('13921615700')">复制</button>
+                        </div>
+                        <div class="instructor-info">
+                            <strong>E-mail：</strong>huajin@ntu.edu.cn
+                            <button class="copy-btn" style="margin-left: 10px;" onclick="copyToClipboard('huajin@ntu.edu.cn')">复制</button>
+                        </div>
+                        <div class="instructor-info">
+                            <strong>专业技术职务：</strong>副教授
+                        </div>
+                        <div class="instructor-achievements">
+                            <strong>主要成果：</strong>长期从事计算机专业基础课程的教学、教研和科研工作，以主编、副主编身份参编教材3部，主持、参加多项横向课题、校级教改项目以及南通市应用研究项目，发表论文多篇。
+                        </div>
+                    </div>
+                    
+                    <div class="instructor-card">
+                        <h3>第二指导教师</h3>
+                        <div class="instructor-info">
+                            <strong>姓名：</strong>徐剑
+                        </div>
+                        <div class="instructor-info">
+                            <strong>联系电话：</strong>18912251343
+                            <button class="copy-btn" style="margin-left: 10px;" onclick="copyToClipboard('18912251343')">复制</button>
+                        </div>
+                        <div class="instructor-info">
+                            <strong>E-mail：</strong>xj1977@ntu.edu.cn
+                            <button class="copy-btn" style="margin-left: 10px;" onclick="copyToClipboard('xj1977@ntu.edu.cn')">复制</button>
+                        </div>
+                        <div class="instructor-info">
+                            <strong>专业技术职务：</strong>讲师
+                        </div>
+                        <div class="instructor-achievements">
+                            <strong>主要成果：</strong>长期从事计算机专业课，公共课的教学，参与编写教材2部，主持参与校级、院级教改项目，主持公共课考试系统的开发与维护。
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    
+    <div class="notification" id="notification">
+        已复制到剪贴板！
+    </div>
+    
+    <script>
+        function copyToClipboard(text) {
+            navigator.clipboard.writeText(text).then(function() {
+                showNotification();
+            }).catch(function(err) {
+                console.error('复制失败:', err);
+            });
+        }
+        
+        function showNotification() {
+            const notification = document.getElementById('notification');
+            notification.classList.add('show');
+            setTimeout(function() {
+                notification.classList.remove('show');
+            }, 2000);
+        }
+    </script>
+    
+    <footer class="footer">
+        <div class="container">
+            <p>© 2025-2027 南通大学杏林学院 人工智能语音小助手项目组</p>
+        </div>
+    </footer>
+</body>
+</html>

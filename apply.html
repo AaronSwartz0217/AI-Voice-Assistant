@@ -1,0 +1,669 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>项目使用 - 人工智能语音小助手</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+        
+        body {
+            font-family: 'Arial', sans-serif;
+            background-color: #f8f9fa;
+            color: #333;
+        }
+        
+        .header {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 20px 0;
+            box-shadow: 0 2px 10px rgba(0,0,0,0.1);
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            padding: 0 20px;
+        }
+        
+        .nav {
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .logo {
+            font-size: 24px;
+            font-weight: bold;
+        }
+        
+        .nav-links {
+            display: flex;
+            list-style: none;
+        }
+        
+        .nav-links li {
+            margin-left: 30px;
+        }
+        
+        .nav-links a {
+            color: white;
+            text-decoration: none;
+            font-size: 16px;
+            transition: color 0.3s ease;
+        }
+        
+        .nav-links a:hover {
+            color: #a0c4ff;
+        }
+        
+        .page-header {
+            background: linear-gradient(135deg, #0f2027, #203a43, #2c5364);
+            color: white;
+            padding: 60px 0;
+            text-align: center;
+        }
+        
+        .page-header h1 {
+            font-size: 36px;
+            margin-bottom: 10px;
+            text-shadow: 0 2px 10px rgba(0,0,0,0.3);
+        }
+        
+        .page-header p {
+            font-size: 16px;
+            opacity: 0.9;
+        }
+        
+        .content-section {
+            padding: 0;
+            width: 100%;
+            height: calc(100vh - 280px);
+            display: flex;
+            flex-direction: column;
+            background-color: white;
+        }
+        
+        .connection-status {
+            padding: 12px 20px;
+            font-size: 14px;
+            border-bottom: 1px solid #e2e8f0;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+        
+        .online-count {
+            font-weight: 600;
+            font-size: 13px;
+        }
+        
+        .online-count span {
+            display: inline-flex;
+            align-items: center;
+            justify-content: center;
+            width: 24px;
+            height: 24px;
+            background-color: #48bb78;
+            color: white;
+            border-radius: 50%;
+            font-size: 12px;
+            margin-left: 8px;
+        }
+        
+        .connection-status.connected {
+            background-color: #c6f6d5;
+            color: #22543d;
+        }
+        
+        .connection-status.disconnected {
+            background-color: #fed7d7;
+            color: #742a2a;
+        }
+        
+        .connection-status.connecting {
+            background-color: #feebc8;
+            color: #7c2d12;
+        }
+        
+        .message-count {
+            font-size: 12px;
+            color: #718096;
+            text-align: right;
+            padding: 8px 20px;
+            background-color: #f7fafc;
+            border-bottom: 1px solid #e2e8f0;
+        }
+        
+        .chat-messages {
+            flex: 1;
+            overflow-y: auto;
+            padding: 20px;
+            padding-bottom: 80px;
+            background-color: #f7fafc;
+        }
+        
+        .message {
+            margin-bottom: 15px;
+            display: flex;
+            align-items: flex-start;
+            animation: fadeIn 0.3s ease;
+        }
+        
+        @keyframes fadeIn {
+            from {
+                opacity: 0;
+                transform: translateY(10px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+        
+        .message.user {
+            justify-content: flex-end;
+        }
+        
+        .message-content {
+            max-width: 70%;
+            padding: 12px 18px;
+            border-radius: 18px;
+            word-wrap: break-word;
+        }
+        
+        .message.user .message-content {
+            background-color: #3a7ca5;
+            color: white;
+            border-bottom-right-radius: 4px;
+        }
+        
+        .message.system .message-content {
+            background-color: #e2e8f0;
+            color: #4a5568;
+            border-bottom-left-radius: 4px;
+        }
+        
+        .message-time {
+            font-size: 12px;
+            color: #a0aec0;
+            margin-top: 5px;
+            text-align: right;
+        }
+        
+        .message-image {
+            max-width: 200px;
+            max-height: 200px;
+            border-radius: 8px;
+            cursor: pointer;
+            object-fit: cover;
+            transition: transform 0.3s ease;
+        }
+        
+        .message-image:hover {
+            transform: scale(1.05);
+        }
+        
+        .message-file {
+            display: inline-block;
+            padding: 8px 12px;
+            background-color: #e2e8f0;
+            color: #3a7ca5;
+            border-radius: 5px;
+            text-decoration: none;
+            font-size: 14px;
+            transition: all 0.3s ease;
+        }
+        
+        .message-file:hover {
+            background-color: #3a7ca5;
+            color: white;
+        }
+        
+        .image-viewer {
+            position: fixed;
+            top: 0;
+            left: 0;
+            right: 0;
+            bottom: 0;
+            background-color: rgba(0, 0, 0, 0.8);
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            z-index: 1000;
+            cursor: pointer;
+        }
+        
+        .image-viewer img {
+            max-width: 90%;
+            max-height: 90%;
+            border-radius: 10px;
+            box-shadow: 0 10px 40px rgba(0, 0, 0, 0.5);
+        }
+        
+        .chat-input-container {
+            position: fixed;
+            bottom: 0;
+            left: 0;
+            right: 0;
+            padding: 15px 20px;
+            background-color: white;
+            border-top: 1px solid #e2e8f0;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            box-shadow: 0 -4px 15px rgba(0,0,0,0.05);
+            z-index: 100;
+        }
+        
+        .upload-buttons {
+            display: flex;
+            gap: 8px;
+        }
+        
+        .upload-btn {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            width: 45px;
+            height: 45px;
+            border: 2px solid #e2e8f0;
+            border-radius: 50%;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            color: #64748b;
+        }
+        
+        .upload-btn:hover {
+            border-color: #3a7ca5;
+            color: #3a7ca5;
+            background-color: #f0f9ff;
+        }
+        
+        .upload-icon {
+            width: 18px;
+            height: 18px;
+        }
+        
+        .upload-btn span {
+            font-size: 10px;
+            margin-top: 2px;
+        }
+        
+        .chat-input {
+            flex: 1;
+            padding: 12px 18px;
+            border: 2px solid #e2e8f0;
+            border-radius: 25px;
+            font-size: 14px;
+            outline: none;
+            transition: border-color 0.3s ease;
+            font-family: 'Arial', sans-serif;
+            background-color: white;
+            color: #333;
+        }
+        
+        .chat-input:focus {
+            border-color: #3a7ca5;
+            background-color: white;
+        }
+        
+        .chat-input:disabled {
+            background-color: #f7fafc;
+            cursor: not-allowed;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            background-color: #3a7ca5;
+            color: white;
+            border: none;
+            border-radius: 25px;
+            font-size: 14px;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            font-family: 'Arial', sans-serif;
+        }
+        
+        .btn:hover {
+            background-color: #2c5364;
+            transform: translateY(-2px);
+            box-shadow: 0 4px 12px rgba(58, 124, 165, 0.4);
+        }
+        
+        .btn:active {
+            transform: translateY(0);
+        }
+        
+        .btn:disabled {
+            opacity: 0.6;
+            cursor: not-allowed;
+            transform: none;
+        }
+        
+        .btn-connect {
+            background-color: #48bb78;
+        }
+        
+        .btn-connect:hover {
+            background-color: #38a169;
+        }
+        
+        .btn-disconnect {
+            background-color: #f56565;
+        }
+        
+        .btn-disconnect:hover {
+            background-color: #e53e3e;
+        }
+        
+        @media (max-width: 768px) {
+            .nav-links li {
+                margin-left: 15px;
+            }
+            
+            .page-header {
+                padding: 40px 0;
+            }
+            
+            .page-header h1 {
+                font-size: 28px;
+            }
+            
+            .chat-wrapper {
+                height: 550px;
+            }
+            
+            .message-content {
+                max-width: 85%;
+            }
+            
+            .chat-input-container {
+                flex-wrap: wrap;
+            }
+            
+            .chat-input {
+                width: 100%;
+                margin-bottom: 10px;
+            }
+            
+            .btn {
+                flex: 1;
+            }
+        }
+    </style>
+</head>
+<body>
+    <header class="header">
+        <div class="container">
+            <nav class="nav">
+                <div class="logo">AI 语音小助手</div>
+                <ul class="nav-links">
+                    <li><a href="index.html">主页</a></li>
+                    <li><a href="detail.html">详情介绍</a></li>
+                    <li><a href="show.html">项目展示</a></li>
+                    <li><a href="apply.html" style="color: #a0c4ff;">项目使用</a></li>
+                    <li><a href="tell.html">联系我们</a></li>
+                </ul>
+            </nav>
+        </div>
+    </header>
+
+    <section class="page-header">
+        <div class="container">
+            <h1>项目使用</h1>
+            <p>与 AI 助手进行实时交流</p>
+        </div>
+    </section>
+
+    <section class="content-section">
+        <div class="connection-status connected" id="connection-status">
+            <div class="online-count">在线 <span id="online-count">0</span></div>
+            <div id="connection-text">已连接 - 可以开始对话</div>
+        </div>
+
+        <div class="message-count" id="message-count">
+            消息：0 / 100
+        </div>
+
+        <div class="chat-messages" id="chat-messages">
+            <div class="message system">
+                <div class="message-content">
+                    欢迎使用人工智能语音小助手！现在可以发送消息进行测试。
+                    <div class="message-time">系统消息</div>
+                </div>
+            </div>
+        </div>
+
+        <div class="chat-input-container">
+            <div class="upload-buttons">
+                <label class="upload-btn" for="file-upload">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                        <polyline points="7 10 12 15 17 10"></polyline>
+                        <line x1="12" y1="15" x2="12" y2="3"></line>
+                    </svg>
+                    <span>文件</span>
+                </label>
+                <input type="file" id="file-upload" accept="*" style="display: none;">
+                
+                <label class="upload-btn" for="image-upload">
+                    <svg class="upload-icon" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                        <rect x="3" y="3" width="18" height="18" rx="2" ry="2"></rect>
+                        <circle cx="8.5" cy="8.5" r="1.5"></circle>
+                        <polyline points="21 15 16 10 5 21"></polyline>
+                    </svg>
+                    <span>图片</span>
+                </label>
+                <input type="file" id="image-upload" accept="image/*" style="display: none;">
+            </div>
+            <input type="text" class="chat-input" id="message-input" placeholder="输入消息...">
+            <button class="btn" id="send-btn">发送</button>
+        </div>
+    </section>
+
+    <script>
+        const chatMessages = document.getElementById('chat-messages');
+        const messageInput = document.getElementById('message-input');
+        const sendBtn = document.getElementById('send-btn');
+        const connectionStatus = document.getElementById('connection-status');
+        const messageCount = document.getElementById('message-count');
+        const fileUpload = document.getElementById('file-upload');
+        const imageUpload = document.getElementById('image-upload');
+        const onlineCount = document.getElementById('online-count');
+        const connectionText = document.getElementById('connection-text');
+
+        let messages = [];
+        const MAX_MESSAGES = 100;
+        let ws = null;
+
+        function updateOnlineCount(count) {
+            onlineCount.textContent = count;
+        }
+
+        function updateMessageCount() {
+            messageCount.textContent = `消息：${messages.length} / ${MAX_MESSAGES}`;
+        }
+
+        function addMessage(content, type = 'user', timeStr = null, contentType = 'text') {
+            const now = new Date();
+            const timeString = timeStr || now.toLocaleTimeString('zh-CN', { hour: '2-digit', minute: '2-digit' });
+
+            const messageDiv = document.createElement('div');
+            messageDiv.className = `message ${type}`;
+            
+            let contentHtml = '';
+            if (contentType === 'image') {
+                contentHtml = `<img src="${content}" alt="图片" class="message-image" onclick="openImageViewer('${content}')">`;
+            } else if (contentType === 'file') {
+                const fileName = content.split('||')[0];
+                const fileUrl = content.split('||')[1];
+                contentHtml = `<a href="${fileUrl}" target="_blank" class="message-file">📎 ${fileName}</a>`;
+            } else {
+                contentHtml = escapeHtml(content);
+            }
+            
+            messageDiv.innerHTML = `
+                <div class="message-content">
+                    ${contentHtml}
+                    <div class="message-time">${type === 'user' ? timeString : '系统消息'}</div>
+                </div>
+            `;
+
+            chatMessages.appendChild(messageDiv);
+            messages.push({ content, type, time: now });
+
+            if (messages.length > MAX_MESSAGES) {
+                const firstMessage = chatMessages.firstChild;
+                if (firstMessage) {
+                    firstMessage.remove();
+                    messages.shift();
+                }
+            }
+
+            updateMessageCount();
+            chatMessages.scrollTop = chatMessages.scrollHeight;
+        }
+
+        function escapeHtml(text) {
+            const div = document.createElement('div');
+            div.textContent = text;
+            return div.innerHTML;
+        }
+
+        function openImageViewer(src) {
+            const viewer = document.createElement('div');
+            viewer.className = 'image-viewer';
+            viewer.innerHTML = `<img src="${src}" onclick="this.parentElement.remove()">`;
+            document.body.appendChild(viewer);
+        }
+
+        function connectWebSocket() {
+            const protocol = window.location.protocol === 'https:' ? 'wss:' : 'ws:';
+            const wsUrl = protocol + '//' + window.location.host;
+            
+            ws = new WebSocket(wsUrl);
+
+            ws.onopen = function() {
+                connectionText.textContent = '已连接 - 可以开始对话';
+                connectionStatus.className = 'connection-status connected';
+                console.log('WebSocket connected');
+            };
+
+            ws.onmessage = function(event) {
+                try {
+                    const data = JSON.parse(event.data);
+                    
+                    // 更新在线人数
+                    if (data.onlineCount !== undefined) {
+                        updateOnlineCount(data.onlineCount);
+                    }
+                    
+                    if (data.type === 'history') {
+                        // 清空现有消息
+                        chatMessages.innerHTML = '';
+                        messages = [];
+                        
+                        // 添加历史消息
+                        data.messages.forEach(msg => {
+                            addMessage(msg.content, msg.type, msg.timeStr, msg.contentType || 'text');
+                        });
+                    } else if (data.type === 'system' || data.type === 'user') {
+                        addMessage(data.content, data.type, data.timeStr, data.contentType || 'text');
+                    }
+                } catch (error) {
+                    console.error('Failed to parse message:', error);
+                }
+            };
+
+            ws.onclose = function() {
+                connectionText.textContent = '连接已断开，正在重连...';
+                connectionStatus.className = 'connection-status disconnected';
+                console.log('WebSocket disconnected');
+                
+                setTimeout(connectWebSocket, 3000);
+            };
+
+            ws.onerror = function(error) {
+                console.error('WebSocket error:', error);
+            };
+        }
+
+        function sendMessage() {
+            const message = messageInput.value.trim();
+            if (!message || !ws || ws.readyState !== WebSocket.OPEN) {
+                return;
+            }
+
+            // 发送消息到服务器
+            ws.send(JSON.stringify({ type: 'message', content: message, contentType: 'text' }));
+            
+            messageInput.value = '';
+            messageInput.focus();
+        }
+
+        function handleFileUpload(event, isImage = false) {
+            const file = event.target.files[0];
+            if (!file || !ws || ws.readyState !== WebSocket.OPEN) {
+                return;
+            }
+
+            const reader = new FileReader();
+            
+            reader.onload = function(e) {
+                const content = e.target.result;
+                if (isImage) {
+                    ws.send(JSON.stringify({ 
+                        type: 'message', 
+                        content: content, 
+                        contentType: 'image',
+                        fileName: file.name 
+                    }));
+                } else {
+                    ws.send(JSON.stringify({ 
+                        type: 'message', 
+                        content: content, 
+                        contentType: 'file',
+                        fileName: file.name 
+                    }));
+                }
+            };
+
+            if (isImage) {
+                reader.readAsDataURL(file);
+            } else {
+                reader.readAsDataURL(file);
+            }
+
+            // 重置文件输入
+            event.target.value = '';
+        }
+
+        sendBtn.addEventListener('click', sendMessage);
+
+        messageInput.addEventListener('keypress', function(e) {
+            if (e.key === 'Enter') {
+                sendMessage();
+            }
+        });
+
+        fileUpload.addEventListener('change', function(e) {
+            handleFileUpload(e, false);
+        });
+
+        imageUpload.addEventListener('change', function(e) {
+            handleFileUpload(e, true);
+        });
+
+        // 初始化连接
+        connectWebSocket();
+
+        updateMessageCount();
+    </script>
+</body>
+</html>

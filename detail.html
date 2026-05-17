@@ -76,12 +76,13 @@
         .content-wrapper {
             display: flex;
             gap: 30px;
-            max-width: 1200px;
+            max-width: 1400px;
             margin: 0 auto;
         }
 
         .sidebar {
-            width: 280px;
+            width: 220px;
+            flex-shrink: 0;
             position: sticky;
             top: 30px;
             height: fit-content;
@@ -205,7 +206,7 @@
 
         .flowchart-wrapper {
             width: 100%;
-            height: 500px;
+            height: 600px;
             overflow: auto;
             background: #f8fafc;
             border-radius: 8px;
@@ -229,6 +230,11 @@
             padding: 20px;
             border-radius: 8px;
             overflow-x: auto;
+        }
+
+        .mermaid svg {
+            max-width: none !important;
+            transition: transform 0.3s ease;
         }
 
         .section-card {
@@ -368,6 +374,7 @@
                     <li><a href="index.html">主页</a></li>
                     <li><a href="detail.html">详情介绍</a></li>
                     <li><a href="show.html">项目展示</a></li>
+                    <li><a href="apply.html">项目使用</a></li>
                     <li><a href="tell.html">联系我们</a></li>
                 </ul>
             </nav>
@@ -426,106 +433,82 @@
                             </div>
                             
                             <div class="flowchart-wrapper" id="flowchart-wrapper">
-                                <div class="mermaid-chart">
-flowchart TB
-    subgraph 硬件端["硬件端 - 基于 BOM V1.1"]
-        Mic["驻极体麦克风<br/>(咪头)"] -->|模拟音频| SU03T["SU-03T 语音识别模组<br/>离线识别固定命令词"]
-        SU03T -->|串口(识别结果ID)| STM32["STM32F103RCT6<br/>主控"]
-        
-        Button["贴片按键 *4<br/>(KEY1~4 / RESET)"] -->|GPIO| STM32
-        DHT["AHT25 温湿度传感器<br/>(I2C接口)"] -->|SDA/SCL| STM32
-        LCD["1.47寸液晶屏<br/>(SPI/I2C)"] <-->|显示数据| STM32
-        LED["LED指示灯 *4<br/>(红/彩色RGB)"] -->|GPIO| STM32
-        
-        subgraph STM32_Func["STM32 本地功能"]
-            CmdParse["命令解析<br/>(识别ID→动作/文本)"]
-            SensorRead["传感器读取<br/>(温湿度)"]
-            DisplayCtrl["液晶显示控制"]
-            WifiCtrl["WiFi模块控制<br/>(AT指令)"]
-        end
-        
-        STM32 --> CmdParse
-        CmdParse --> SensorRead & DisplayCtrl & WifiCtrl
-        
-        WifiCtrl -->|串口AT| WiFiMod["WiFi模块<br/>(需外挂ESP8266/ESP32-S3)"]
-        WiFiMod -->|WebSocket 文本/音频流| Server_WS
-        
-        Server_WS -->|响应文本/音频| WiFiMod -->|串口| STM32
-        STM32 -->|触发| Speaker["喇叭<br/>(PWM/DAC+功放)"]
-        
-        Power["电源管理<br/>AMS1117-3.3 / 自恢复保险"] --> STM32
-    end
-
-    subgraph 软件端["软件端 - 手机App / 网站端"]
-        Soft_Mic["麦克风"] -->|PCM音频| Soft_UI["交互界面<br/>(按住说话 / 文本输入)"]
-        Soft_UI -->|OPUS压缩| Soft_WS["WebSocket客户端"]
-        Soft_WS -->|音频流| Server_WS
-        Server_WS -->|响应音频| Soft_WS -->|解码播放| Soft_Speaker["扬声器"]
-        
-        Soft_UI <-->|可选文本交互| HTTP_API["HTTP REST API"]
-    end
-
-    subgraph AI服务器端["AI服务器端 - 云端 / 本地GPU"]
-        WS_Server["WebSocket服务端<br/>统一接入端口"]
-        HTTP_API["HTTP API服务<br/>(健康检查 / 文本对话)"]
-        
-        WS_Server -->|音频/文本| Router{"内容类型路由"}
-        Router -->|音频| Audio_Decode["音频解码<br/>(OPUS → PCM)"]
-        Audio_Decode -->|PCM| ASR["ASR语音识别<br/>(Whisper / 阿里云 / 讯飞)"]
-        ASR -->|文本| OpenClaw_Gateway["OpenClaw 网关层"]
-        Router -->|文本| OpenClaw_Gateway
-        
-        subgraph OpenClaw_Core["OpenClaw Agent 核心(二选一)"]
-            direction TB
-            
-            subgraph Option_Local["方案A:本地Ollama + OpenClaw"]
-                Ollama["Ollama 服务<br/>(加载 GPT-OSS-20B)"]
-                Local_Agent["OpenClaw Agent<br/>(本地决策 + 工具调用)"]
-                Ollama <--> Local_Agent
-            end
-            
-            subgraph Option_Cloud["方案B:购买第三方OpenClaw API"]
-                Cloud_OpenClaw["云OpenClaw服务<br/>(阿里云 / 其他厂商)"]
-                Cloud_LLM["内置大模型<br/>(按token计费)"]
-                Cloud_OpenClaw <--> Cloud_LLM
-            end
-            
-            Gateway_Logic["控制网关层<br/>(统一入口 / 任务分发 / 安全沙箱)"]
-            Agent_Logic["智能体单元<br/>(规划 / 决策 / 执行动作)"]
-            Channels["交互通道<br/>(对接飞书 / 微信 / 钉钉 / CLI)"]
-            
-            Option_Local --> Gateway_Logic
-            Option_Cloud --> Gateway_Logic
-            Gateway_Logic --> Agent_Logic --> Channels
-        end
-        
-        subgraph Skills_Layer["技能扩展层 Skills Layer"]
-            direction LR
-            
-            subgraph Custom_Skills["自主培养 Skills"]
-                Data_Make["数据集制作<br/>(自采数据 / 阿里云PAI标注)"]
-                Train_Pipeline["训练流水线<br/>(微调LoRA / 函数调用)"]
-                Deploy_Skill["部署为OpenClaw Skill<br/>(本地或云端)"]
-                Data_Make --> Train_Pipeline --> Deploy_Skill
-            end
-            
-            Hub_Skills["开源 Hub Skills<br/>(AgentSkills.cc / 复旦DataHub)"]
-            API_Skills["API 集成 Skills<br/>(Composio / 第三方插件)"]
-            
-            Custom_Skills --> Agent_Logic
-            Hub_Skills --> Agent_Logic
-            API_Skills --> Agent_Logic
-        end
-        
-        OpenClaw_Core -->|回复文本| TTS["TTS语音合成<br/>(Piper本地 / Edge TTS API)"]
-        TTS -->|PCM音频| Audio_Encode["音频编码<br/>(PCM → OPUS)"]
-        Audio_Encode -->|OPUS| WS_Server
-        
-        OpenClaw_Core -->|纯文本回复| HTTP_API
-    end
-
-    HTTP_API -->|文本请求| OpenClaw_Gateway
-                                </div>
+                                <svg id="flowchart-svg" viewBox="0 0 800 500" preserveAspectRatio="xMidYMid meet" style="width: 100%; height: 100%;">
+                                    <defs>
+                                        <marker id="arrow" markerWidth="10" markerHeight="7" refX="9" refY="3.5" orient="auto">
+                                            <polygon points="0 0, 10 3.5, 0 7" fill="#333"/>
+                                        </marker>
+                                    </defs>
+                                    
+                                    <rect x="30" y="30" width="220" height="200" rx="5" fill="white" stroke="#333" stroke-width="1.5"/>
+                                    <text x="140" y="55" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">硬件端</text>
+                                    
+                                    <rect x="50" y="80" width="180" height="40" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="140" y="105" text-anchor="middle" font-size="11" fill="#333">SU-03T 语音识别</text>
+                                    <text x="140" y="120" text-anchor="middle" font-size="10" fill="#666">驻极体麦克风 → 离线识别</text>
+                                    
+                                    <rect x="50" y="140" width="180" height="40" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="140" y="165" text-anchor="middle" font-size="11" fill="#333">STM32F103RCT6 主控</text>
+                                    <text x="140" y="180" text-anchor="middle" font-size="10" fill="#666">命令解析 / WiFi控制</text>
+                                    
+                                    <rect x="50" y="200" width="180" height="40" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="140" y="225" text-anchor="middle" font-size="11" fill="#333">外设模块</text>
+                                    <text x="140" y="240" text-anchor="middle" font-size="10" fill="#666">AHT25 / LCD / LED / 喇叭</text>
+                                    
+                                    <line x1="140" y="120" x2="140" y="140" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    <line x1="140" y="180" x2="140" y="200" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    
+                                    <rect x="280" y="30" width="220" height="140" rx="5" fill="white" stroke="#333" stroke-width="1.5"/>
+                                    <text x="390" y="55" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">软件端</text>
+                                    
+                                    <rect x="300" y="80" width="180" height="50" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="390" y="105" text-anchor="middle" font-size="11" fill="#333">交互界面</text>
+                                    <text x="390" y="120" text-anchor="middle" font-size="10" fill="#666">麦克风 / 扬声器 / 文本输入</text>
+                                    
+                                    <rect x="300" y="150" width="180" height="30" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="390" y="170" text-anchor="middle" font-size="11" fill="#333">WebSocket / HTTP客户端</text>
+                                    
+                                    <line x1="390" y="130" x2="390" y="150" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    
+                                    <rect x="530" y="30" width="240" height="400" rx="5" fill="white" stroke="#333" stroke-width="1.5"/>
+                                    <text x="650" y="55" text-anchor="middle" font-size="14" font-weight="bold" fill="#333">AI服务器端</text>
+                                    
+                                    <rect x="550" y="80" width="200" height="35" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="102" text-anchor="middle" font-size="11" fill="#333">WebSocket服务端</text>
+                                    
+                                    <rect x="550" y="130" width="200" height="35" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="152" text-anchor="middle" font-size="11" fill="#333">音频解码 (OPUS→PCM)</text>
+                                    
+                                    <rect x="550" y="180" width="200" height="35" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="202" text-anchor="middle" font-size="11" fill="#333">ASR语音识别 (Whisper)</text>
+                                    
+                                    <rect x="550" y="230" width="200" height="50" rx="3" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="252" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">OpenClaw Agent</text>
+                                    <text x="650" y="268" text-anchor="middle" font-size="10" fill="#666">Ollama本地 / 云端API</text>
+                                    
+                                    <rect x="550" y="300" width="200" height="35" rx="3" fill="#f5f5f5" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="322" text-anchor="middle" font-size="11" font-weight="bold" fill="#333">技能扩展层</text>
+                                    <text x="650" y="338" text-anchor="middle" font-size="10" fill="#666">自主培养 / Hub / API集成</text>
+                                    
+                                    <rect x="550" y="355" width="200" height="35" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="377" text-anchor="middle" font-size="11" fill="#333">TTS语音合成 (Piper)</text>
+                                    
+                                    <rect x="550" y="405" width="200" height="35" rx="3" fill="white" stroke="#333" stroke-width="1"/>
+                                    <text x="650" y="427" text-anchor="middle" font-size="11" fill="#333">音频编码 (PCM→OPUS)</text>
+                                    
+                                    <line x1="650" y="105" x2="650" y="130" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    <line x1="650" y="155" x2="650" y="180" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    <line x1="650" y="205" x2="650" y="230" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    <line x1="650" y="280" x2="650" y="300" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    <line x1="650" y="340" x2="650" y="355" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    <line x1="650" y="380" x2="650" y="405" stroke="#333" stroke-width="1.5" marker-end="url(#arrow)"/>
+                                    
+                                    <line x1="250" y="160" x2="280" y="100" stroke="#333" stroke-width="1.5" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+                                    <text x="265" y="155" fill="#666" font-size="10">WebSocket</text>
+                                    
+                                    <line x1="480" y="170" x2="530" y="100" stroke="#333" stroke-width="1.5" stroke-dasharray="5,5" marker-end="url(#arrow)"/>
+                                    <text x="505" y="165" fill="#666" font-size="10">WebSocket/HTTP</text>
+                                </svg>
                             </div>
                             
                             <p style="text-align: center; margin-top: 15px; color: #718096; font-size: 14px;">提示：使用鼠标滚轮缩放，拖动图表查看细节，或使用上方控制按钮</p>
@@ -923,7 +906,6 @@ navigator.mediaDevices.getUserMedia({ audio: true })
 
         document.addEventListener('DOMContentLoaded', function() {
             const flowchartWrapper = document.getElementById('flowchart-wrapper');
-            const flowchartSvg = document.getElementById('flowchart-svg');
             const zoomInBtn = document.getElementById('zoom-in');
             const zoomOutBtn = document.getElementById('zoom-out');
             const zoomResetBtn = document.getElementById('zoom-reset');
@@ -936,8 +918,11 @@ navigator.mediaDevices.getUserMedia({ audio: true })
             const scaleStep = 0.1;
 
             function updateZoom() {
-                flowchartSvg.style.transform = `scale(${scale})`;
-                flowchartSvg.style.transformOrigin = 'center center';
+                const mermaidSvg = document.querySelector('.flowchart-wrapper svg');
+                if (mermaidSvg) {
+                    mermaidSvg.style.transform = `scale(${scale})`;
+                    mermaidSvg.style.transformOrigin = 'center center';
+                }
                 zoomLevelSpan.textContent = `${Math.round(scale * 100)}%`;
             }
 
